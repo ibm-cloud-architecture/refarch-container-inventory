@@ -313,11 +313,11 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
     
     <label class="md-nav__link" for="nav-2">
-      Deployments
+      Development approach
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
       <label class="md-nav__title" for="nav-2">
-        Deployments
+        Development approach
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
@@ -328,8 +328,56 @@
 
 
   <li class="md-nav__item">
-    <a href="run-local/" title="Run locally" class="md-nav__link">
-      Run locally
+    <a href="creatingApp/" title="Create foundations" class="md-nav__link">
+      Create foundations
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="tdd/" title="Apply TDD" class="md-nav__link">
+      Apply TDD
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Solution Deployments
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Solution Deployments
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="run-local/" title="Run locally with Minikube" class="md-nav__link">
+      Run locally with Minikube
     </a>
   </li>
 
@@ -426,21 +474,24 @@
                 
                 
                 <h1 id="container-inventory-legacy-app">Container inventory legacy app</h1>
-<p>This project illustrates the integration of a legacy application with MQ and Kafka. The application manages the current container inventory for the shipment company, introduced in the end to end solution <a href="https://ibm-cloud-architecture.github.io/refarch-kc/">here.</a>.</p>
-<p>We recommend readding the content from the <a href="https://ibm-cloud-architecture.github.io/refarch-container-inventory/">book view.</a></p>
+<p>This project illustrates the integration of a legacy application with MQ and Kafka. The application manages the current container inventory for the shipment company, introduced in the end to end solution <a href="https://ibm-cloud-architecture.github.io/refarch-kc/">here.</a></p>
+<p>We recommend reading the content from the <a href="https://ibm-cloud-architecture.github.io/refarch-container-inventory/">book view.</a></p>
 <h2 id="component-view">Component view</h2>
 <p>The high level view of the components involved in the solution is illustrated in the figure below:</p>
 <p><img alt="" src="component-view.png" /></p>
 <ul>
-<li>On the left the container management microservice is implemented in a <a href="https://ibm-cloud-architecture.github.io/refarch-kc-container-ms">separate repository</a> and supports the Reefer container event processing. In the current use case, this component id producing events to a <code>containers</code> topic defined in Kafka / Event Streams. One of those events will be container in maintenance and container out of maintenance. It is also interested to get new Reefer added to the inventory so it can assign order to container.</li>
-<li>On the right side the <code>Inventory app</code> is a JEE application maintenaining the container inventory. We did it in Java because we can partially reuse another code. But the most important thing, it is a legacy app, using MQ as communication layer. It could have been done in other language running on mainframe. This app is listening to MQ to get container maintenance messages, and publishes container added to the inventory message.</li>
-<li>The <code>MQ source connector</code> is a component that will get message from the queue, filter message only about Reefer and will mpa to a <code>containerAdded</code> event. This code is based on Event Stream MQ connector.</li>
-<li>The <code>MQ sink connector</code> is a component to preocess container events from Kafka topic, filter only the <code>container on maitenance and off maintenance events</code> and propagate them to MQ for down processing.</li>
+<li>On the left of the figure, the container management microservice (implemented in a <a href="https://ibm-cloud-architecture.github.io/refarch-kc-container-ms">separate repository</a>) supports the Reefer container management and events processing. In the current use case, this component is producing events to a <code>containers</code> topic defined in Kafka / Event Streams. One of those events will be container in maintenance and container out of maintenance. It is also interrested to receive new "Reefer added" to the legacy inventory so it can assign order to container. </li>
+<li>On the right side of the figure, the <code>Inventory app</code> is a JEE application managing the container inventory. We did it in Java because we can partially reuse another code from previous contribution. But the most important thing, it is considered as a legacy app, using MQ as communication layer. It could have been done in other language running on mainframe for example. This app is listening to MQ to get container maintenance messages, and publishes container added message to queues.</li>
+<li>The <code>MQ source connector</code> is a component that gets messages from the queue, filters messages only about relevant to Reefer container and maps the message as a <code>containerAdded</code> event. This code is based on Event Stream MQ connector.</li>
+<li>The <code>MQ sink connector</code> is a component to process container events from Kafka <code>container</code> topic, filter only the <code>container on maitenance and off maintenance events</code> and propagate them to MQ for down stream processing.</li>
 </ul>
 <h2 id="pre-requisites">Pre-requisites</h2>
 <p>We assume we have the following pre-installed software:</p>
 <ul>
 <li>docker</li>
+<li>MQ running on IBM Cloud, or on IBM Cloud Private, or when running locally using docker.</li>
+<li>Maven to compile the JEE application. The JEE app is packaged as war file, and deployed on a OpenLiberty server. It could also have been deployed to WebSphere Application Server. </li>
+<li>Event Stream deployed</li>
 </ul>
 <h2 id="sub-projects">Sub projects</h2>
 <p>The <code>jee-inventory</code> folder includes the Java based project for managing the container inventory. We make it very simple using maven and deployable on WebSphere or on Liberty. </p>
@@ -470,13 +521,13 @@
       <nav class="md-footer-nav__inner md-grid">
         
         
-          <a href="run-local/" title="Run locally" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="creatingApp/" title="Create foundations" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Run locally
+                Create foundations
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

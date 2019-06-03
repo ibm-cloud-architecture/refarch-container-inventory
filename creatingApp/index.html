@@ -36,7 +36,7 @@
     
     
       
-        <title>Run locally with Minikube - Container inventory legacy app</title>
+        <title>Create foundations - Container inventory legacy app</title>
       
     
     
@@ -96,7 +96,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#run-locally" tabindex="1" class="md-skip">
+      <a href="#creating-app-from-command-line" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -121,7 +121,7 @@
               Container inventory legacy app
             </span>
             <span class="md-header-nav__topic">
-              Run locally with Minikube
+              Create foundations
             </span>
           
         </div>
@@ -241,10 +241,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
     
     <label class="md-nav__link" for="nav-2">
       Development approach
@@ -260,11 +262,76 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../creatingApp/" title="Create foundations" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Create foundations
+      </label>
+    
+    <a href="./" title="Create foundations" class="md-nav__link md-nav__link--active">
       Create foundations
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" title="Requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-create-the-foundation" title="Step 1: Create the foundation" class="md-nav__link">
+    Step 1: Create the foundation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-build-and-run" title="Step 2: Build and  Run" class="md-nav__link">
+    Step 2: Build and  Run
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#endpoints" title="Endpoints" class="md-nav__link">
+    Endpoints
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -289,12 +356,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
     
     <label class="md-nav__link" for="nav-3">
       Solution Deployments
@@ -310,62 +375,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Run locally with Minikube
-      </label>
-    
-    <a href="./" title="Run locally with Minikube" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../run-local/" title="Run locally with Minikube" class="md-nav__link">
       Run locally with Minikube
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#running-mq-with-docker" title="Running MQ with docker" class="md-nav__link">
-    Running MQ with docker
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#prepare-the-mq-run-time" title="Prepare the MQ run time" class="md-nav__link">
-    Prepare the MQ run time
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -407,16 +421,30 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#running-mq-with-docker" title="Running MQ with docker" class="md-nav__link">
-    Running MQ with docker
+  <a href="#requirements" title="Requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-create-the-foundation" title="Step 1: Create the foundation" class="md-nav__link">
+    Step 1: Create the foundation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-build-and-run" title="Step 2: Build and  Run" class="md-nav__link">
+    Step 2: Build and  Run
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#prepare-the-mq-run-time" title="Prepare the MQ run time" class="md-nav__link">
-    Prepare the MQ run time
+  <a href="#endpoints" title="Endpoints" class="md-nav__link">
+    Endpoints
   </a>
   
 </li>
@@ -442,23 +470,53 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/ibm-cloud-architecture/refarch-container-inventory/edit/master/docs/run-local.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/ibm-cloud-architecture/refarch-container-inventory/edit/master/docs/creatingApp.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="run-locally">Run Locally</h1>
-<h2 id="running-mq-with-docker">Running MQ with docker</h2>
-<h3 id="prepare-the-mq-run-time">Prepare the MQ run time</h3>
-<blockquote>
-<p><strong>Attention</strong>: Queue manager and queue data are saved in the filesystem. To avoid losing the queue manager and queue data, we use docker volumes. Volumes are attached to containers when they are run and persist after the container is deleted. The following command creates a volume name <code>qm1data</code></p>
-</blockquote>
-<pre><code class="shell">$  docker volume create qm1data
+                <h1 id="creating-app-from-command-line">Creating app from command line</h1>
+<p>The goal of this article is to go over a test driven and devops approach to develop this service. </p>
+<p>To create the microprofile app we used the ibmcloud CLI. (version 2.2.0 used).</p>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li><a href="https://maven.apache.org/install.html">Maven</a></li>
+<li>Java 8: Any compliant JVM should work.</li>
+<li><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java 8 JDK from Oracle</a></li>
+<li><a href="http://www.ibm.com/developerworks/java/jdk/">Java 8 JDK from IBM (AIX, Linux, z/OS, IBM i)</a>,
+    or <a href="https://developer.ibm.com/assets/wasdev/#filter/assetTypeFilters=PRODUCT">Download a Liberty server package</a>
+    that contains the IBM JDK (Windows, Linux)</li>
+</ul>
+<h2 id="step-1-create-the-foundation">Step 1: Create the foundation</h2>
+<ul>
+<li>Login to IBM Cloud, and set the target to an existing organization and space</li>
+</ul>
+<pre><code>ibmcloud login -a https://cloud.ibm.com  -u &lt;username&gt;
+ibmcloud target -o cent@us.ibm.com -s Cognitive
 </code></pre>
 
-<p>The remote MQ clients use a <code>Channel</code> to communicate with the MQ manager over the network. We need to create a virtual docker network to support this communication. The command below creates such network:</p>
-<pre><code class="shell">$ docker network create mq-brown-network
+<ul>
+<li>Create the foundation for an app</li>
+</ul>
+<pre><code>ibmcloud dev create
 </code></pre>
 
-<p>The scripts <code>runMQlocal</code> uses docker and the IBM MQ docker image to run MQ as a daemon.</p>
+<p>Then select the appropriate options. For our case there are:</p>
+<pre><code>* Backend Service / Web App
+* Java - MicroProfile / Java EE
+* Java Microservice with Eclipse MicroProfile and Java EE
+* IBM DevOps, deploy to Kubernetes containers
+</code></pre>
+<h2 id="step-2-build-and-run">Step 2: Build and  Run</h2>
+<p>To build and run the application:
+1. <code>mvn install</code>
+1. <code>mvn liberty:run-server</code></p>
+<p>To run the application in Docker use the Docker file called <code>Dockerfile</code>:</p>
+<pre><code></code></pre>
+
+<p>If you do not want to install Maven locally you can use <code>Dockerfile-tools</code> to build a container with Maven installed.</p>
+<h3 id="endpoints">Endpoints</h3>
+<p>The application exposes the following endpoints:
+* Health endpoint: <code>&lt;host&gt;:&lt;port&gt;/&lt;contextRoot&gt;/health</code></p>
+<p>The context root is set in the <code>src/main/webapp/WEB-INF/ibm-web-ext.xml</code> file. The ports are set in the pom.xml file and exposed to the CLI in the cli-config.yml file.</p>
                 
                   
                 
@@ -479,7 +537,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../tdd/" title="Apply TDD" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href=".." title="Introduction" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -488,19 +546,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Apply TDD
+                Introduction
               </span>
             </div>
           </a>
         
         
-          <a href="../run-icp/" title="Run on IBM Cloud private" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../tdd/" title="Apply TDD" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Run on IBM Cloud private
+                Apply TDD
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
