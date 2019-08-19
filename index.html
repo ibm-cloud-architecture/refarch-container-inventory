@@ -258,9 +258,29 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#component-view" title="Component view" class="md-nav__link">
-    Component view
+  <a href="#component-views" title="Component views" class="md-nav__link">
+    Component views
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mq-integration" title="MQ integration" class="md-nav__link">
+    MQ integration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-change-data-capture" title="Using Change Data Capture" class="md-nav__link">
+    Using Change Data Capture
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -420,9 +440,29 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#component-view" title="Component view" class="md-nav__link">
-    Component view
+  <a href="#component-views" title="Component views" class="md-nav__link">
+    Component views
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mq-integration" title="MQ integration" class="md-nav__link">
+    MQ integration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-change-data-capture" title="Using Change Data Capture" class="md-nav__link">
+    Using Change Data Capture
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -475,9 +515,10 @@
                 
                 <h1 id="container-inventory-legacy-app">Container inventory legacy app</h1>
 <p>This project illustrates the integration of a legacy application with MQ and Kafka. The application manages the current container inventory for the shipment company, introduced in the end to end solution <a href="https://ibm-cloud-architecture.github.io/refarch-kc/">here.</a></p>
-<p>We recommend reading the content from the <a href="https://ibm-cloud-architecture.github.io/refarch-container-inventory/">book view.</a></p>
-<h2 id="component-view">Component view</h2>
-<p>The high level view of the components involved in the solution is illustrated in the figure below:</p>
+<p>The JEE application is a 3 tiers architecture, used to manage container inventory. As part of those containers are the Reefer ones. So the approach is to use the legacy application to keep manage the inventory but use MQ or Change Data Capture to propagate the inventory updates to the microservice world. </p>
+<h2 id="component-views">Component views</h2>
+<h3 id="mq-integration">MQ integration</h3>
+<p>The first way to propagate data change is to have the legacy application sharing data via MQ. This is common as MQ is used as messaging services since multiple years:</p>
 <p><img alt="" src="component-view.png" /></p>
 <ul>
 <li>On the left of the figure, the container management microservice (implemented in a <a href="https://ibm-cloud-architecture.github.io/refarch-kc-container-ms">separate repository</a>) supports the Reefer container management and events processing. In the current use case, this component is producing events to a <code>containers</code> topic defined in Kafka / Event Streams. One of those events will be container in maintenance and container out of maintenance. It is also interrested to receive new "Reefer added" to the legacy inventory so it can assign order to container. </li>
@@ -485,16 +526,26 @@
 <li>The <code>MQ source connector</code> is a component that gets messages from the queue, filters messages only about relevant to Reefer container and maps the message as a <code>containerAdded</code> event. This code is based on Event Stream MQ connector.</li>
 <li>The <code>MQ sink connector</code> is a component to process container events from Kafka <code>container</code> topic, filter only the <code>container on maitenance and off maintenance events</code> and propagate them to MQ for down stream processing.</li>
 </ul>
+<h3 id="using-change-data-capture">Using Change Data Capture</h3>
+<p>The second integration is via the deployment of a change data capture solution, like <a href="https://debezium.io/">debezium</a> </p>
+<p><img alt="" src="cdc-components.png" /></p>
+<ul>
+<li>The microservice on the left, is listening to events from kafka topics</li>
+<li>The legacy application runs as is, to persist data to a DB server like DB2. </li>
+<li>The transaction log is monitored by a CDC agent, running in cluster to push data as events to a kafka topic</li>
+</ul>
 <h2 id="pre-requisites">Pre-requisites</h2>
 <p>We assume we have the following pre-installed software:</p>
 <ul>
-<li>docker</li>
-<li>MQ running on IBM Cloud, or on IBM Cloud Private, or when running locally using docker.</li>
-<li>Maven to compile the JEE application. The JEE app is packaged as war file, and deployed on a OpenLiberty server. It could also have been deployed to WebSphere Application Server. </li>
-<li>Event Stream deployed</li>
+<li><a href="">Docker CLI</a> and docker engine on your development machine</li>
+<li>For approach 1, MQ running on IBM Cloud, or on IBM Cloud Private, or when running locally using IBM docker image.</li>
+<li>For approach 2, Debezium in docker.</li>
+<li>Maven to compile the JEE application. The JEE app is packaged as war file, and deployed on a OpenLiberty server. It could also have been deployed to WebSphere Application Server. We just used a very simple JEE app.</li>
+<li>IBM Event Stream deployed on public or private cloud, or using Kafka docker images.</li>
 </ul>
 <h2 id="sub-projects">Sub projects</h2>
 <p>The <code>jee-inventory</code> folder includes the Java based project for managing the container inventory. We make it very simple using maven and deployable on WebSphere or on Liberty. </p>
+<p>The <code>cdc</code> folder includes the configuration of Debezium and approach 2.</p>
 <h2 id="build-and-run">Build and run</h2>
 <h2 id="more-readings">More readings</h2>
 <ul>
