@@ -1,0 +1,14 @@
+site_name: Container inventory legacy app
+repo_url: https://github.com/ibm-cloud-architecture/refarch-container-inventory
+nav:
+  - Introduction: index.md
+  - Development approach:
+    - Create foundations: creatingApp.md
+    - Apply TDD: tdd.md
+  - Solution Deployments:
+    - Run locally with Minikube: run-local.md
+    - Run on IBM Cloud private: run-icp.md
+
+theme: 
+  name: material
+extra_css: ["extra.css"]
