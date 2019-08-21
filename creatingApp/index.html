@@ -377,20 +377,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../run-local/" title="Run locally with Minikube" class="md-nav__link">
-      Run locally with Minikube
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../run-icp/" title="Run on IBM Cloud private" class="md-nav__link">
-      Run on IBM Cloud private
+    <a href="/#build-and-run" title="Run locally" class="md-nav__link">
+      Run locally
     </a>
   </li>
 
@@ -489,28 +477,33 @@
 <ul>
 <li>Login to IBM Cloud, and set the target to an existing organization and space</li>
 </ul>
-<pre><code>ibmcloud login -a https://cloud.ibm.com  -u &lt;username&gt;
+<div class="codehilite"><pre><span></span>ibmcloud login -a https://cloud.ibm.com  -u &lt;username&gt;
 ibmcloud target -o cent@us.ibm.com -s Cognitive
-</code></pre>
+</pre></div>
 
 <ul>
 <li>Create the foundation for an app</li>
 </ul>
-<pre><code>ibmcloud dev create
-</code></pre>
+<div class="codehilite"><pre><span></span>ibmcloud dev create
+</pre></div>
 
 <p>Then select the appropriate options. For our case there are:</p>
-<pre><code>* Backend Service / Web App
+<div class="codehilite"><pre><span></span>* Backend Service / Web App
 * Java - MicroProfile / Java EE
 * Java Microservice with Eclipse MicroProfile and Java EE
 * IBM DevOps, deploy to Kubernetes containers
-</code></pre>
+</pre></div>
+
+
 <h2 id="step-2-build-and-run">Step 2: Build and  Run</h2>
-<p>To build and run the application:
-1. <code>mvn install</code>
-1. <code>mvn liberty:run-server</code></p>
+<p>To build and run the application:</p>
+<ol>
+<li><code>mvn install</code></li>
+<li><code>mvn liberty:run-server</code></li>
+</ol>
 <p>To run the application in Docker use the Docker file called <code>Dockerfile</code>:</p>
-<pre><code></code></pre>
+<div class="codehilite"><pre><span></span>
+</pre></div>
 
 <p>If you do not want to install Maven locally you can use <code>Dockerfile-tools</code> to build a container with Maven installed.</p>
 <h3 id="endpoints">Endpoints</h3>

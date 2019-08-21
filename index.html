@@ -303,6 +303,54 @@
     Build and run
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-the-invdb-in-db2" title="Creating the INVDB in DB2" class="md-nav__link">
+    Creating the INVDB in DB2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-the-webapp" title="Build the webapp" class="md-nav__link">
+    Build the webapp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-the-webapp-with-maven" title="Start the webapp with maven" class="md-nav__link">
+    Start the webapp with maven
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-the-mq-image-with-the-queue-configuration" title="Create the MQ image with the queue configuration" class="md-nav__link">
+    Create the MQ image with the queue configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-the-solution-using-docker-compose" title="Start the solution using docker compose" class="md-nav__link">
+    Start the solution using docker compose
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration-tests" title="Integration tests" class="md-nav__link">
+    Integration tests
+  </a>
+  
 </li>
       
         <li class="md-nav__item">
@@ -396,20 +444,8 @@
 
 
   <li class="md-nav__item">
-    <a href="run-local/" title="Run locally with Minikube" class="md-nav__link">
-      Run locally with Minikube
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="run-icp/" title="Run on IBM Cloud private" class="md-nav__link">
-      Run on IBM Cloud private
+    <a href="/#build-and-run" title="Run locally" class="md-nav__link">
+      Run locally
     </a>
   </li>
 
@@ -485,6 +521,54 @@
     Build and run
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-the-invdb-in-db2" title="Creating the INVDB in DB2" class="md-nav__link">
+    Creating the INVDB in DB2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-the-webapp" title="Build the webapp" class="md-nav__link">
+    Build the webapp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-the-webapp-with-maven" title="Start the webapp with maven" class="md-nav__link">
+    Start the webapp with maven
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-the-mq-image-with-the-queue-configuration" title="Create the MQ image with the queue configuration" class="md-nav__link">
+    Create the MQ image with the queue configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-the-solution-using-docker-compose" title="Start the solution using docker compose" class="md-nav__link">
+    Start the solution using docker compose
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration-tests" title="Integration tests" class="md-nav__link">
+    Integration tests
+  </a>
+  
 </li>
       
         <li class="md-nav__item">
@@ -519,7 +603,7 @@
 <h2 id="component-views">Component views</h2>
 <h3 id="mq-integration">MQ integration</h3>
 <p>The first way to propagate data change is to have the legacy application sharing data via MQ. This is common as MQ is used as messaging services since multiple years:</p>
-<p><img alt="" src="component-view.png" /></p>
+<p><img alt="" src="images/component-view.png" /></p>
 <ul>
 <li>On the left of the figure, the container management microservice (implemented in a <a href="https://ibm-cloud-architecture.github.io/refarch-kc-container-ms">separate repository</a>) supports the Reefer container management and events processing. In the current use case, this component is producing events to a <code>containers</code> topic defined in Kafka / Event Streams. One of those events will be container in maintenance and container out of maintenance. It is also interrested to receive new "Reefer added" to the legacy inventory so it can assign order to container. </li>
 <li>On the right side of the figure, the <code>Inventory app</code> is a JEE application managing the container inventory. We did it in Java because we can partially reuse another code from previous contribution. But the most important thing, it is considered as a legacy app, using MQ as communication layer. It could have been done in other language running on mainframe for example. This app is listening to MQ to get container maintenance messages, and publishes container added message to queues.</li>
@@ -528,7 +612,7 @@
 </ul>
 <h3 id="using-change-data-capture">Using Change Data Capture</h3>
 <p>The second integration is via the deployment of a change data capture solution, like <a href="https://debezium.io/">debezium</a> </p>
-<p><img alt="" src="cdc-components.png" /></p>
+<p><img alt="" src="images/cdc-components.png" /></p>
 <ul>
 <li>The microservice on the left, is listening to events from kafka topics</li>
 <li>The legacy application runs as is, to persist data to a DB server like DB2. </li>
@@ -545,8 +629,130 @@
 </ul>
 <h2 id="sub-projects">Sub projects</h2>
 <p>The <code>jee-inventory</code> folder includes the Java based project for managing the container inventory. We make it very simple using maven and deployable on WebSphere or on Liberty. </p>
+<p>The <code>db2</code> includes the scripts and SQL DDL to create the database for the inventory and a docker image for running DB2 locally.</p>
 <p>The <code>cdc</code> folder includes the configuration of Debezium and approach 2.</p>
 <h2 id="build-and-run">Build and run</h2>
+<h3 id="creating-the-invdb-in-db2">Creating the INVDB in DB2</h3>
+<div class="admonition note">
+<p class="admonition-title">Note<p>The creation of the INVDB database with the containers table and some test data should be done only one time, or each time you delete the <code>db2/database</code> folder.</p>
+</p>
+</div>
+<p>Go to the <code>db2</code> folder and start the db2 server with the script:</p>
+<div class="codehilite"><pre><span></span>./startDB2.sh
+</pre></div>
+
+<p>This will download a development docker image for DB2 and configure the INVDB database. The container table needs to be added using the following steps within the docker shell:</p>
+<ul>
+<li>
+<p>Start the bash session</p>
+<div class="codehilite"><pre><span></span>docker exec -ti db2 bash
+</pre></div>
+
+</li>
+<li>
+<p>Then swap to db2inst1 user and use the scripts that were mounted under /home</p>
+<div class="codehilite"><pre><span></span>su - db2inst1
+cd /home/sql/inventory
+./createDB.sh
+</pre></div>
+
+<p>The trace should look like:</p>
+<div class="codehilite"><pre><span></span>INVDB
+
+ Database Connection Information ...
+
+Containers table not found so let create it
+create table containers ( containerid VARCHAR(30) NOT NULL, type VARCHAR(20), status VARCHAR(20), brand VARCHAR(50), capacity DECIMAL, CREATIONDATE TIMESTAMP, UPDATEDATE TIMESTAMP, PRIMARY KEY (containerid) )
+DB20000I  The SQL command completed successfully.
+There is no data in inventory DB, let add some...
+INSERT INTO containers (containerid, type, status, brand, capacity) 
+
+VALUES (&#39;C01&#39;,&#39;Reefer&#39;,&#39;Operational&#39;,&#39;containerbrand&#39;,20), 
+(&#39;C02&#39;,&#39;Dry&#39;,&#39;Operational&#39;,&#39;containerbrand&#39;,20), 
+(&#39;C03&#39;,&#39;Dry&#39;,&#39;Operational&#39;,&#39;containerbrand&#39;,40), (&#39;C04&#39;,&#39;FlatRack&#39;,&#39;Operational&#39;,&#39;containerbrand&#39;,40), 
+(&#39;C05&#39;,&#39;OpenTop&#39;,&#39;Operational&#39;,&#39;containerbrand&#39;,40),
+(&#39;C06&#39;,&#39;OpenSide&#39;,&#39;Operational&#39;,&#39;containerbrand&#39;,40), 
+(&#39;C07&#39;,&#39;Tunnel&#39;,&#39;Operational&#39;,&#39;containerbrand&#39;,40), 
+(&#39;C08&#39;,&#39;Tank&#39;,&#39;Operational&#39;,&#39;containerbrand&#39;,40), 
+(&#39;C09&#39;,&#39;Thermal&#39;,&#39;Operational&#39;,&#39;containerbrand&#39;,20)
+
+DB20000I  The SQL command completed successfully.
+</pre></div>
+
+</li>
+<li>
+<p>Exit the shell sessions. The database is created under the db2 folder, and it is git ignored.</p>
+</li>
+<li>
+<p>Stop DB2 docker instance with <code>docker stop db2</code></p>
+</li>
+<li>Tag the image of the container so we can reuse the same database.</li>
+</ul>
+<div class="codehilite"><pre><span></span>ID=$(docker ps -l|grep db2|awk &#39;{print $1}&#39;) 
+docker commit --author=&quot;IBMCASE&quot; $ID ibmcase/greendb2
+</pre></div>
+
+<p>This docker image will be used in the docker compose settings to run the solution locally. Also the <code>ibncase/greendb2</code> is available in public docker hub.</p>
+<h3 id="build-the-webapp">Build the webapp</h3>
+<div class="codehilite"><pre><span></span>mvn package -DskipIT
+</pre></div>
+
+<p>This will build the containerinventory.war file and prepare Liberty defaultServer without running the Integration tests. </p>
+<h3 id="start-the-webapp-with-maven">Start the webapp with maven</h3>
+<p>To start the web app</p>
+<div class="codehilite"><pre><span></span>mvn liberty:run-server
+</pre></div>
+
+<p>Point the browser to the following address:</p>
+<ul>
+<li>Verify the app is up and running <code>http://localhost:9080/health</code></li>
+<li>Get the list of all containers: <code>http://localhost:9080/containers</code></li>
+<li>Get a container using its ID: <code>http://localhost:9080/containers/C02</code></li>
+<li>Get the private api <code>https://localhost:9443/ibm/api</code> use the admin user and password as defined in the <code>src/main/liberty/config/server.xml</code> file.</li>
+</ul>
+<h3 id="create-the-mq-image-with-the-queue-configuration">Create the MQ image with the queue configuration</h3>
+<div class="admonition note">
+<p class="admonition-title">Note<p>Queue manager and queue data are saved in the filesystem. To avoid losing the queue manager and queue data, we use docker volumes. Volumes are attached to containers when they are run and persist after the container is deleted. The following command creates a volume name <code>qm1data</code></p>
+</p>
+</div>
+<p>Work under the <code>mq-config</code> folder.</p>
+<div class="codehilite"><pre><span></span><span class="nb">cd</span> mq-config
+docker volume create qm1data
+</pre></div>
+
+<p>The remote MQ clients use a <code>Channel</code> to communicate with the MQ manager over the network. We need to create a virtual docker network to support this communication. The command below creates such network:</p>
+<div class="codehilite"><pre><span></span>docker network create mq-network
+</pre></div>
+
+<p>The folder mq-config includes the <code>20-config.mqsc</code> file to define the queues to be used to communicate with Kafka.</p>
+<div class="codehilite"><pre><span></span>define ql(&#39;TO.CONTAINERS&#39;)
+define ql(&#39;FROM.CONTAINERS&#39;)
+</pre></div>
+
+<p>The goal is to take the IBM MQ development image and move this configuration file inside the image.</p>
+<div class="codehilite"><pre><span></span>docker build -t ibmcase/mq .
+</pre></div>
+
+<p>For more information of the IBM MQ image see <a href="https://hub.docker.com/r/ibmcom/mq/">this note</a> and <a href="https://github.com/ibm-messaging/mq-container/blob/master/docs/usage.md">how to use the MQ container</a>.</p>
+<p>The scripts <code>runMQlocal.sh</code> uses docker and the IBM MQ docker image to run MQ as a daemon. This is helpful when developing the JMS consumer and producer code, but we recommend to use the docker-compose to start both MQ and DB2.</p>
+<p>Going to the console: <a href="https://localhost:9443/ibmmq/console/login.html">https://localhost:9443/ibmmq/console/login.html</a> to login using the admin user. See instructions <a href="https://github.com/ibm-messaging/mq-container/blob/master/docs/developer-config.md">in this note</a>.</p>
+<p><img alt="" src="images/mq-console.png" /></p>
+<h3 id="start-the-solution-using-docker-compose">Start the solution using docker compose</h3>
+<p>Under the project folder, use the following command to start both DB2 and MQ</p>
+<div class="codehilite"><pre><span></span>docker-compose up
+</pre></div>
+
+<p>The docker-compose.yml file defines the two services, one volume for MQ and the mq network.</p>
+<h2 id="integration-tests">Integration tests</h2>
+<p>The folder <code>scripts</code> includes a simple add container scripts to post a new container to the web application.</p>
+<p>To create a Reefer with id C200 use:
+<div class="codehilite"><pre><span></span>./addContainer.sh C200
+</pre></div></p>
+<p>To validate the record is added to the database</p>
+<div class="codehilite"><pre><span></span>curl http://localhost:9080/containers/C200
+</pre></div>
+
+<p>We should have enought to test CDC with Debezium.</p>
 <h2 id="more-readings">More readings</h2>
 <ul>
 <li><a href="https://developer.ibm.com/messaging/2018/01/09/developing-mq-java-applications-maven/">Developing Java applications for MQ just got easier with Maven</a></li>
