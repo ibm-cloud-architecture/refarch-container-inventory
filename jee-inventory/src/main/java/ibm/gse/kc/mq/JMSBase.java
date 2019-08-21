@@ -9,7 +9,7 @@ import com.ibm.msg.client.jms.JmsFactoryFactory;
 import com.ibm.msg.client.wmq.WMQConstants;
 
 public class JMSBase {
-	protected MQConfiguration config = MQConfiguration.getInstance();
+	protected MQConfiguration config = MQConfiguration.instance();
 	protected JMSContext context;
 	protected Destination destination;
 	

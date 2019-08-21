@@ -1,19 +1,22 @@
-FROM websphere-liberty:webProfile8
-LABEL maintainer="IBM Java Engineering at IBM Cloud"
-COPY /target/liberty/wlp/usr/servers/defaultServer /config/
-# Grant write access to apps folder, this is to support old and new docker versions.
-# Liberty document reference : https://hub.docker.com/_/websphere-liberty/
-USER root
-RUN chmod g+w /config/apps
-USER 1001
-# install any missing features required by server config
-RUN installUtility install --acceptLicense defaultServer
+FROM adoptopenjdk/openjdk8-openj9
+LABEL maintainer="IBM Garage Solution Engineering team"
+RUN apt-get update && \
+    apt-get install -y maven unzip
 
-# Upgrade to production license if URL to JAR provided
-ARG LICENSE_JAR_URL
-RUN \ 
-  if [ $LICENSE_JAR_URL ]; then \
-    wget $LICENSE_JAR_URL -O /tmp/license.jar \
-    && java -jar /tmp/license.jar -acceptLicense /opt/ibm \
-    && rm /tmp/license.jar; \
-  fi
+COPY . /project
+
+WORKDIR /project/
+
+RUN mvn install -DskipTests
+
+RUN cd target && \
+    unzip *.zip && \
+    mkdir /config && \
+    mv wlp/usr/servers/*/* /config/
+
+FROM open-liberty:kernel-java8-openj9
+
+COPY --chown=1001:0 --from=0 /config/ /config/
+
+EXPOSE 9080
+EXPOSE 9443

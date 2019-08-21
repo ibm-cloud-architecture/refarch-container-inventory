@@ -13,12 +13,12 @@ import ibm.gse.kc.dao.ContainerDAO;
 import ibm.gse.kc.dao.ContainerDAOMockup;
 import ibm.gse.kc.model.Container;
 import ibm.gse.service.ApplicationException;
-import ibm.gse.service.ContainerService;
+import ibm.gse.service.ContainerServiceImpl;
 
 public class TestContainerService {
 	
-	private static ContainerDAO dao = ContainerDAOMockup.instance();
-	private static ContainerService serv = new ContainerService(dao);
+	private static ContainerDAO dao = new ContainerDAOMockup();
+	private static ContainerServiceImpl serv = new ContainerServiceImpl(dao);
 	
 
 	@BeforeClass
@@ -81,8 +81,10 @@ public class TestContainerService {
 			e.printStackTrace();
 			fail("Should not get an exception");
 		}
-		
-
-
+	}
+	
+	@Test
+	public void clearAll() {
+		serv.getDAO().stop();
 	}
 }

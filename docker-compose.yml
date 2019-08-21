@@ -1,0 +1,30 @@
+version: '3'
+services:
+  mq:
+    image: ibmcase/mq:latest
+    hostname: mqmgr
+    ports:
+      - "10414:1414"
+      - "10443:9443"
+    environment:
+      LICENSE: 'accept'
+      MQ_QMGR_NAME: 'LQM1'
+      MQ_APP_PASSWORD: 'admin01'
+    volumes:
+      - qm1data:/mnt/mqm
+  db2:
+    image: ibmcase/greendb2
+    hostname: db2server
+    privileged: true
+    ports:
+      - "50000:50000"
+    environment:
+      LICENSE: 'accept'
+      DB2INST1_PASSWORD: 'db2inst1'
+      DBNAME: 'INVDB'
+    volumes:
+      - ./db2/database:/database
+volumes:
+  qm1data:
+networks:
+  mq-network:

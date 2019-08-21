@@ -23,7 +23,7 @@ public class ProducerContainerMessageTest {
 	@Test
 	public void shouldHaveUseEnvVar() {
 		 Map<String, String> env = System.getenv();
-		 MQConfiguration config = MQConfiguration.getInstance();
+		 MQConfiguration config = MQConfiguration.instance();
 		 Assert.assertTrue(config.getProperties().getProperty(MQConfiguration.MQ_HOST).equals("localhost"));
 	}
 	@Test

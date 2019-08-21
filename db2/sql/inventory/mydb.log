@@ -207,3 +207,38 @@ DB20000I  The SQL command completed successfully.
 COMMIT
 DB20000I  The SQL command completed successfully.
 
+INSERT INTO containers (containerid, type, status, brand, capacity) VALUES ('C01','Reefer','Operational','containerbrand',20), ('C02','Dry','Operational','containerbrand',20), ('C03','Dry','Operational','containerbrand',40), ('C04','FlatRack','Operational','containerbrand',40), ('C05','OpenTop','Operational','containerbrand',40), ('C06','OpenSide','Operational','containerbrand',40), ('C07','Tunnel','Operational','containerbrand',40), ('C08','Tank','Operational','containerbrand',40), ('C09','Thermal','Operational','containerbrand',20)
+DB21034E  The command was processed as an SQL statement because it was not a 
+valid Command Line Processor command.  During SQL processing it returned:
+SQL0204N  "DB2INST1.CONTAINERS" is an undefined name.  SQLSTATE=42704
+
+COMMIT
+DB20000I  The SQL command completed successfully.
+
+INSERT INTO containers (containerid, type, status, brand, capacity) VALUES ('C01','Reefer','Operational','containerbrand',20), ('C02','Dry','Operational','containerbrand',20), ('C03','Dry','Operational','containerbrand',40), ('C04','FlatRack','Operational','containerbrand',40), ('C05','OpenTop','Operational','containerbrand',40), ('C06','OpenSide','Operational','containerbrand',40), ('C07','Tunnel','Operational','containerbrand',40), ('C08','Tank','Operational','containerbrand',40), ('C09','Thermal','Operational','containerbrand',20)
+DB20000I  The SQL command completed successfully.
+
+COMMIT
+DB20000I  The SQL command completed successfully.
+
+connect to INVDB
+
+   Database Connection Information
+
+ Database server        = DB2/LINUXX8664 11.5.0.0
+ SQL authorization ID   = DB2INST1
+ Local database alias   = INVDB
+
+
+create table containers ( containerid VARCHAR(30) NOT NULL, type VARCHAR(20), status VARCHAR(20), brand VARCHAR(50), capacity DECIMAL, CREATIONDATE TIMESTAMP, UPDATEDATE TIMESTAMP, PRIMARY KEY (containerid) )
+DB20000I  The SQL command completed successfully.
+
+COMMIT
+DB20000I  The SQL command completed successfully.
+
+INSERT INTO containers (containerid, type, status, brand, capacity) VALUES ('C01','Reefer','Operational','containerbrand',20), ('C02','Dry','Operational','containerbrand',20), ('C03','Dry','Operational','containerbrand',40), ('C04','FlatRack','Operational','containerbrand',40), ('C05','OpenTop','Operational','containerbrand',40), ('C06','OpenSide','Operational','containerbrand',40), ('C07','Tunnel','Operational','containerbrand',40), ('C08','Tank','Operational','containerbrand',40), ('C09','Thermal','Operational','containerbrand',20)
+DB20000I  The SQL command completed successfully.
+
+COMMIT
+DB20000I  The SQL command completed successfully.
+

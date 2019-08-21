@@ -6,9 +6,14 @@ nav:
     - Create foundations: creatingApp.md
     - Apply TDD: tdd.md
   - Solution Deployments:
-    - Run locally with Minikube: run-local.md
-    - Run on IBM Cloud private: run-icp.md
+    - Run locally: /#build-and-run
 
 theme: 
   name: material
 extra_css: ["extra.css"]
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - pymdownx.smartsymbols
+  - pymdownx.superfences

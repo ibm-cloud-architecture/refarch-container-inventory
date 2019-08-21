@@ -11,11 +11,12 @@ import ibm.gse.kc.dao.ContainerDAO;
 import ibm.gse.kc.dao.ContainerDAOMockup;
 import ibm.gse.kc.model.Container;
 import ibm.gse.service.ContainerService;
+import ibm.gse.service.ContainerServiceImpl;
 
 public class TestInventoryResource {
 	
-	private static ContainerDAO dao = ContainerDAOMockup.instance();
-	private static ContainerService serv = new ContainerService(dao);
+	private static ContainerDAO dao = new ContainerDAOMockup();
+	private static ContainerService serv = new ContainerServiceImpl(dao);
 	private static InventoryResource res = new InventoryResource(serv);
 
 	@BeforeClass
@@ -69,6 +70,10 @@ public class TestInventoryResource {
 		Response r = res.getContainers();
 		Assert.assertNotNull(r);
 		Assert.assertTrue(r.getStatus() == 200);
-
+	}
+	
+	@Test
+	public void clearAll() {
+		res.getService().getDAO().stop();
 	}
 }

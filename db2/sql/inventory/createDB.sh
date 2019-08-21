@@ -7,8 +7,16 @@ echo $invdb
 if [ -z "$invdb" ] ; then
    echo "DB: $DBNAME not found so let create it"
    db2 create database $DBNAME
-   db2 -tvf create-tables.db2 -z mydb.log
 fi
+db2 connect to $DBNAME
+table=$(db2 -x "select containerid,type from containers" )
+
+if [[ "$table" =~ "undefined" ]]
+then
+  echo "Containers table not found so let create it"
+  db2 -tvf create-tables.db2 -z mydb.log
+fi
+
 db2 "connect to $DBNAME"
 db2 -x "select containerid,type from containers" |wc -l >> xx
 read rows < xx

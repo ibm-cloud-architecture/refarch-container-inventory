@@ -38,6 +38,7 @@ Then select the appropriate options. For our case there are:
 ## Step 2: Build and  Run
 
 To build and run the application:
+
 1. `mvn install`
 1. `mvn liberty:run-server`
 

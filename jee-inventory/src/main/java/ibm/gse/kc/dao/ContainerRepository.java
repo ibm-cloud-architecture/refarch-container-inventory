@@ -11,54 +11,35 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ibm.gse.kc.model.Container;
 import ibm.gse.service.ApplicationException;
 
 public class ContainerRepository implements ContainerDAO {
+	private static final Logger logger = LoggerFactory.getLogger(ContainerRepository.class);
 
-	protected String hostname = "localhost";
-	protected String portNumber = "50000";
-	protected String dbname = "INVDB";
-	protected String dbuser = "db2inst1";
-	protected String dbpwd = "db2inst1";
+
 	protected Connection conn;
 	protected String SQL_INSERT = "INSERT INTO CONTAINERS (CONTAINERID,TYPE,STATUS,BRAND,CAPACITY) VALUES (?,?,?,?,?)";
+	protected DBConfiguration config;
 	
 	public ContainerRepository() {
-		Map<String, String> env = System.getenv();
+		
 		try {
 			Class.forName("com.ibm.db2.jcc.DB2Driver").newInstance();
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
-		if (env.get("DBHOST") != null ) {
-			hostname = env.get("DBHOST");
-		}
-		
-		if (env.get("DBPORT") != null ) {
-			portNumber = env.get("DBPORT");
-		}
-		
-		if (env.get("DBNAME") != null ) {
-			dbname = env.get("DBNAME");
-		}
-		
-		if (env.get("DBUSER") != null ) {
-			dbuser = env.get("DBUSER");
-		}
-		
-		if (env.get("DBPWD") != null ) {
-			dbpwd = env.get("DBPWD");
-		}
-	    String url = "jdbc:db2://" + hostname + ":" + portNumber +"/" + dbname;
+		config=  DBConfiguration.instance();
 	    try {
-			conn = DriverManager.getConnection(url, dbuser, dbpwd);
+			conn = DriverManager.getConnection(config.getUrl(), config.getDbuser(), config.getDbpwd());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	
 	@Override
 	public Collection<Container> getContainers() {
@@ -73,7 +54,7 @@ public class ContainerRepository implements ContainerDAO {
 	    		  rs.getString("type"),
 	    		  rs.getInt("capacity"));
 	    	c.setStatus(rs.getString("status"));
-	        System.out.println(c.toString());
+	       logger.info(c.toString());
 	        l.add(c);
 	      }
 		} catch (Exception e) {

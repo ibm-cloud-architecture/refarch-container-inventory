@@ -13,7 +13,7 @@ import ibm.gse.kc.mq.MQConfiguration;
 
 public class MQConsumerTester implements Runnable  {
 
-	protected MQConfiguration config = MQConfiguration.getInstance();
+	protected MQConfiguration config = MQConfiguration.instance();
 	
 	
 	public static void main(String[] args) {

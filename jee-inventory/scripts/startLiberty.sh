@@ -1,0 +1,1 @@
+mvn liberty:run-server

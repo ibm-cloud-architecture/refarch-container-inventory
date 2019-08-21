@@ -2,7 +2,6 @@ package ibm.gse.app.rest;
 
 import java.util.Optional;
 
-import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -18,19 +17,26 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ibm.gse.kc.model.Container;
 import ibm.gse.service.ApplicationException;
 import ibm.gse.service.ContainerService;
+import ibm.gse.service.ContainerServiceImpl;
 
-@Path("containers")
+@Path("/containers")
 public class InventoryResource {
+	private static final Logger logger = LoggerFactory.getLogger(InventoryResource.class);
 	
-	@Inject
 	protected ContainerService service;
 	
 
-	 public InventoryResource(ContainerService serv) {
+	public InventoryResource() {
+		service = new ContainerServiceImpl();
+	}
+	
+	public InventoryResource(ContainerService serv) {
 		this.service = serv;
 	}
 
@@ -61,7 +67,7 @@ public class InventoryResource {
 	 }
 	 
 	@GET
-	@Path("{Id}")
+	@Path("/{Id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Operation(summary = "Query a container by id", description = "")
 	@APIResponses(value = {
@@ -70,10 +76,15 @@ public class InventoryResource {
 	public Response getById(@PathParam("Id") String containerID) {
 		Optional<Container> oo = service.getById(containerID);
 	    if (oo.isPresent()) {
+	    	logger.info(oo.get().toString());
 	        return Response.ok().entity(oo.get()).build();
 	    } else {
 	        return Response.status(Status.NOT_FOUND).build();
 	    }
+	}
+
+	public ContainerService getService() {
+		return service;
 	}
 
 	

@@ -32,7 +32,7 @@ public class MQConfiguration {
 	
 	public static MQConfiguration instance;
 	
-	public static synchronized MQConfiguration getInstance() {
+	public static synchronized MQConfiguration instance() {
 		if (instance == null) {
 			instance = new MQConfiguration();
 			instance.loadProperties();

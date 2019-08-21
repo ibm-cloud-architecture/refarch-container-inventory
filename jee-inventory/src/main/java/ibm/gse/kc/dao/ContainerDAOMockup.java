@@ -15,14 +15,8 @@ public class ContainerDAOMockup implements ContainerDAO {
 	private static final Logger logger = LoggerFactory.getLogger(ContainerDAOMockup.class);
 	private static Map<String,Container> inventory;
 	
-	private static ContainerDAO instance;
-
-    public synchronized static ContainerDAO instance() {
-        if (instance == null) {
-            instance = new ContainerDAOMockup();
-            inventory =  new ConcurrentHashMap<String,Container>(); 
-        }
-        return instance;
+    public ContainerDAOMockup(){
+    	inventory =  new ConcurrentHashMap<String,Container>(); 
     }
 
 	@Override
@@ -54,13 +48,14 @@ public class ContainerDAOMockup implements ContainerDAO {
 
 	@Override
 	public void stop() {
-		// TODO Auto-generated method stub
+		inventory.clear();
 		
 	}
 
 	@Override
 	public void delete(String cid) {
-		// TODO Auto-generated method stub
+		inventory.remove(cid);
 		
 	}
+
 }
