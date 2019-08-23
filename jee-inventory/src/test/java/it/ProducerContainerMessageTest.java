@@ -1,7 +1,5 @@
 package it;
 
-import static org.junit.Assert.fail;
-
 import java.util.Map;
 
 import org.junit.Assert;
@@ -26,6 +24,8 @@ public class ProducerContainerMessageTest {
 		 MQConfiguration config = MQConfiguration.instance();
 		 Assert.assertTrue(config.getProperties().getProperty(MQConfiguration.MQ_HOST).equals("localhost"));
 	}
+	
+	
 	@Test
 	public void shouldSendAMessageToMQ() {
 		Container c = new Container("C034","Iron10","IronContainer",100);
