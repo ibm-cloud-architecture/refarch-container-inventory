@@ -1,0 +1,900 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.1">
+    
+    
+      
+        <title>Postgres - Debezium to kafka - Container inventory legacy app</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.982221ab.css">
+      
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.1f0bcf2b.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../extra.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#streaming-postgresql-updates-to-kafka-with-debezium" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href=".." title="Container inventory legacy app" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Container inventory legacy app
+            </span>
+            <span class="md-header-nav__topic">
+              Postgres - Debezium to kafka
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/ibm-cloud-architecture/refarch-container-inventory/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href=".." title="Container inventory legacy app" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    Container inventory legacy app
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/ibm-cloud-architecture/refarch-container-inventory/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Development approach
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Development approach
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../creatingApp/" title="Create foundations" class="md-nav__link">
+      Create foundations
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Integrations
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Integrations
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../mq-kafka/" title="MQ - Kafka" class="md-nav__link">
+      MQ - Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Postgres - Debezium to kafka
+      </label>
+    
+    <a href="./" title="Postgres - Debezium to kafka" class="md-nav__link md-nav__link--active">
+      Postgres - Debezium to kafka
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#initial-setup" title="Initial Setup" class="md-nav__link">
+    Initial Setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-kafka-zookeeper" title="Install Kafka &amp; Zookeeper" class="md-nav__link">
+    Install Kafka &amp; Zookeeper
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-kafka-connect" title="Install Kafka Connect" class="md-nav__link">
+    Install Kafka Connect
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-postgresql" title="Install PostgreSQL" class="md-nav__link">
+    Install PostgreSQL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-sample-data-to-postgresql" title="Add Sample Data to PostgreSQL" class="md-nav__link">
+    Add Sample Data to PostgreSQL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-the-debezium-postgresql-connector" title="Configure the Debezium PostgreSQL connector" class="md-nav__link">
+    Configure the Debezium PostgreSQL connector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cleanup" title="Cleanup" class="md-nav__link">
+    Cleanup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" title="References" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../eventstreams-debezium/" title="Event Streams - Debezium" class="md-nav__link">
+      Event Streams - Debezium
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Solution Deployments
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Solution Deployments
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../run-local/" title="Deploy and run locally" class="md-nav__link">
+      Deploy and run locally
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../mq-cloud/" title="Running MQ on IBM Cloud" class="md-nav__link">
+      Running MQ on IBM Cloud
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../openshift/" title="Deploy and run on Openshift" class="md-nav__link">
+      Deploy and run on Openshift
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#initial-setup" title="Initial Setup" class="md-nav__link">
+    Initial Setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-kafka-zookeeper" title="Install Kafka &amp; Zookeeper" class="md-nav__link">
+    Install Kafka &amp; Zookeeper
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-kafka-connect" title="Install Kafka Connect" class="md-nav__link">
+    Install Kafka Connect
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-postgresql" title="Install PostgreSQL" class="md-nav__link">
+    Install PostgreSQL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-sample-data-to-postgresql" title="Add Sample Data to PostgreSQL" class="md-nav__link">
+    Add Sample Data to PostgreSQL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-the-debezium-postgresql-connector" title="Configure the Debezium PostgreSQL connector" class="md-nav__link">
+    Configure the Debezium PostgreSQL connector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cleanup" title="Cleanup" class="md-nav__link">
+    Cleanup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" title="References" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/ibm-cloud-architecture/refarch-container-inventory/edit/master/docs/debezium-postgresql.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="streaming-postgresql-updates-to-kafka-with-debezium">Streaming PostgreSQL Updates to Kafka with Debezium</h1>
+<p>This guide will help you get up and running with Kafka Connect to stream PostgreSQL database changes to a Kafka topic. It will guide you through the installation and configuration of Kafka, Kafka Connect, Debezium &amp; PostgreSQL.</p>
+<p><strong>Note: This guide has only been tested using Docker Desktop for Mac. Results may vary using other Kubernetes cluster types.</strong></p>
+<p>This guide assumes that you have the following:</p>
+<ul>
+<li>Access to a Kubernetes Cluster</li>
+<li>Helm (w/ Tiller) installed on the Kubernetes Cluster</li>
+<li>Helm Incubator repository enabled</li>
+<li>cURL, Postman or another HTTP client</li>
+</ul>
+<p>If you do not meet the prerequisites, please see the following links:</p>
+<ul>
+<li><a href="https://rominirani.com/tutorial-getting-started-with-kubernetes-with-docker-on-mac-7f58467203fd">Getting Started with Kubernetes with Docker on Mac</a></li>
+<li><a href="https://helm.sh/docs/using_helm/">Install Helm</a></li>
+<li><a href="https://github.com/helm/charts#how-do-i-enable-the-incubator-repository">Enable Helm Incubator repository</a></li>
+<li><a href="https://www.getpostman.com/downloads/">Install Postman</a></li>
+</ul>
+<h2 id="initial-setup">Initial Setup</h2>
+<p>To keep this tutorial isolated from other application running in your Kubernetes cluster and to cleanup easier, we will create a separate namespace for the new resources.</p>
+<div class="codehilite"><pre><span></span>  $ kubectl create namespace kafka-connect-tutorial
+</pre></div>
+
+<p>(Optional) You may configure your Kubernetes context's default namespace to <code>kafka-connect-tutorial</code> using the following command:</p>
+<div class="codehilite"><pre><span></span>  $ kubectl config set-context --current --namespace kafka-connect-tutorial
+</pre></div>
+
+<h2 id="install-kafka-zookeeper">Install Kafka &amp; Zookeeper</h2>
+<p>This section will guide you through the installation of Kafka &amp; Zookeeper. You will also deploy a Kafka client pod to interact with the Kafka Cluster, as well as configure 3 Kafka Topics that will be used by Kafka Connect.</p>
+<ol>
+<li>
+<p>Install Kafka &amp; Zookeeper to your namespace using the Incubator Helm Chart.</p>
+<div class="codehilite"><pre><span></span>  $ helm install --name kafka --namespace kafka-connect-tutorial incubator/kafka --set external.enabled<span class="o">=</span><span class="nb">true</span>
+</pre></div>
+
+</li>
+<li>
+<p>Deploy a Kafka Connect client container to your cluster by creating a file in your workspace named 
+<code>kafka-client-deploy.yaml</code> with the following contents:</p>
+<div class="codehilite"><pre><span></span><span class="c1"># kafka-client-deploy.yaml</span>
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kafka-client
+spec:
+  containers:
+  - name: kafka-client
+    image: confluentinc/cp-kafka:5.0.1
+    command:
+      - sh
+      - -c
+      - <span class="s2">&quot;exec tail -f /dev/null&quot;</span>
+</pre></div>
+
+</li>
+<li>
+<p>Execute the following command to deploy the Kafka Client Pod:</p>
+<div class="codehilite"><pre><span></span>$ kubectl create -f kafka-client-deploy.yaml -n kafka-connect-tutorial
+</pre></div>
+
+</li>
+<li>
+<p>Create the Kafka Connect Topics using the following commands:</p>
+<p><div class="codehilite"><pre><span></span>$ kubectl -n kafka-connect-tutorial <span class="nb">exec</span> kafka-client -- kafka-topics --zookeeper kafka-zookeeper:2181 --topic connect-offsets --create --partitions <span class="m">1</span> --replication-factor <span class="m">1</span>
+</pre></div>
+<div class="codehilite"><pre><span></span>$ kubectl -n kafka-connect-tutorial <span class="nb">exec</span> kafka-client -- kafka-topics --zookeeper kafka-zookeeper:2181 --topic connect-configs --create --partitions <span class="m">1</span> --replication-factor <span class="m">1</span>
+</pre></div>
+<div class="codehilite"><pre><span></span>$ kubectl -n kafka-connect-tutorial <span class="nb">exec</span> kafka-client -- kafka-topics --zookeeper kafka-zookeeper:2181 --topic connect-status --create --partitions <span class="m">1</span> --replication-factor <span class="m">1</span>
+</pre></div></p>
+</li>
+</ol>
+<h2 id="install-kafka-connect">Install Kafka Connect</h2>
+<p>This section will guide you through the installation of Kafka Connect using the Debezium Kafka Connect Docker Image. As part of this installation, you will create a NodePort service to expose the Kafka Connect API. This service will be available on port 30500 of your cluster nodes. If you are using Docker Desktop, this will be http://localhost:30500.</p>
+<ol>
+<li>Create a file named <code>kafka-connect-deploy.yaml</code> in your workspace and add the following contents:
+<div class="codehilite"><pre><span></span>  # kafka-connect-deploy.yaml
+
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: kafkaconnect-deploy
+    labels:
+      app: kafkaconnect
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: kafkaconnect
+    template:
+      metadata:
+        labels:
+          app: kafkaconnect
+      spec:
+        containers:
+          - name: kafkaconnect-container
+            image: debezium/connect:0.10.0.CR1
+            readinessProbe:
+              httpGet:
+                path: /
+                port: 8083
+            livenessProbe:
+              httpGet:
+                path: /
+                port: 8083
+            env:
+              - name: BOOTSTRAP_SERVERS
+                value: kafka:9092
+              - name: GROUP_ID
+                value: &quot;1&quot;
+              - name: OFFSET_STORAGE_TOPIC
+                value: connect-offsets
+              - name: CONFIG_STORAGE_TOPIC
+                value: connect-configs
+              - name: STATUS_STORAGE_TOPIC
+                value: connect-status
+            ports:
+            - containerPort: 8083
+  ---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: kafkaconnect-service
+    labels:
+      app: kafkaconnect-service
+  spec:
+    type: NodePort
+    ports:
+      - name: kafkaconnect
+        protocol: TCP
+        port: 8083
+        nodePort: 30500
+    selector:
+        app: kafkaconnect
+</pre></div></li>
+<li>Deploy Kafka Connect with the following command:
+<div class="codehilite"><pre><span></span>  $ kubectl create -f kafka-connect-deploy.yaml --namespace kafka-connect-tutorial
+</pre></div></li>
+</ol>
+<h2 id="install-postgresql">Install PostgreSQL</h2>
+<p>This section will guide you through the installation of PostgreSQL using the Stable Helm Chart. You will also add some additional configuration for PostgreSQL necessary for Debezium to read the PostgreSQL transaction log. PostgreSQL will be available on port 30600 of your cluster nodes. If you are using Docker Desktop, this will be http://localhost:30600.</p>
+<ol>
+<li>
+<p>Create a PostgreSQL configuration necessary for Debezium. Create a file in your workspace named <code>extended.conf</code> with the following contents:
+<div class="codehilite"><pre><span></span>  # extended.conf
+
+  wal_level = logical
+  max_wal_senders = 1
+  max_replication_slots = 1
+</pre></div></p>
+</li>
+<li>
+<p>Create a ConfigMap from the <code>extended.conf</code> file with the following command:
+<div class="codehilite"><pre><span></span>  $ kubectl create configmap --namespace kafka-connect-tutorial --from-file=extended.conf postgresql-config
+</pre></div></p>
+</li>
+<li>
+<p>Install PostgreSQL using the Stable Helm Chart with the following command:
+<div class="codehilite"><pre><span></span>  $ helm install --name postgres --namespace kafka-connect-tutorial --set extendedConfConfigMap=postgresql-config --set service.type=NodePort --set service.nodePort=30600 --set postgresqlPassword=passw0rd stable/postgresql
+</pre></div></p>
+</li>
+</ol>
+<h2 id="add-sample-data-to-postgresql">Add Sample Data to PostgreSQL</h2>
+<ol>
+<li>
+<p>Open a shell in the Postgres container.
+<div class="codehilite"><pre><span></span>  $ kubectl exec --namespace kafka-connect-tutorial -it postgres-postgresql-0  -- /bin/sh
+</pre></div></p>
+</li>
+<li>
+<p>Login to Postgres with the following command, entering the password <code>passw0rd</code> when prompted.
+<div class="codehilite"><pre><span></span>  $ psql --user postgres
+</pre></div></p>
+</li>
+<li>
+<p>Create a table named <code>people</code>.
+<div class="codehilite"><pre><span></span>  $ CREATE TABLE people(id SERIAL PRIMARY KEY,name VARCHAR(20),creationdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,updatedate TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+</pre></div></p>
+</li>
+<li>
+<p>Insert data into the table.
+<div class="codehilite"><pre><span></span>  $ INSERT INTO people (name) VALUES (&#39;Rachel&#39;),(&#39;Thomas&#39;),(&#39;Benjamin&#39;),(&#39;Allison&#39;),(&#39;Todd&#39;);
+</pre></div></p>
+</li>
+</ol>
+<h2 id="configure-the-debezium-postgresql-connector">Configure the Debezium PostgreSQL connector</h2>
+<p>This section will show you how to configure the Debezium PostgreSQL connector.</p>
+<ol>
+<li>Using your HTTP client (cURL shown), make the following request to the Kafka Connect API. This will configure a new Debezium PostgreSQL connector. This connector monitors the <code>pgoutput</code> stream for operations on the <code>people</code> table.</li>
+</ol>
+<p><strong>Note:</strong> If you are not using Docker Desktop, please set <code>localhost</code> to the hostname/IP of one of your cluster nodes.</p>
+<p><strong>Note:</strong> If you did not follow the <a href="#add-sample-data-to-postgresql">Add Sample Data to PostgreSQL</a> section, replace <code>"public.containers"</code> with the name of your table.
+<div class="codehilite"><pre><span></span>curl -X POST \
+  http://localhost:30500/connectors \
+  -H &#39;Content-Type: application/json&#39; \
+  -d &#39;{
+    &quot;name&quot;: &quot;people-connector&quot;,
+    &quot;config&quot;: {
+            &quot;connector.class&quot;: &quot;io.debezium.connector.postgresql.PostgresConnector&quot;,
+            &quot;plugin.name&quot;: &quot;pgoutput&quot;,
+            &quot;database.hostname&quot;: &quot;postgres-postgresql&quot;,
+            &quot;database.port&quot;: &quot;5432&quot;,
+            &quot;database.user&quot;: &quot;postgres&quot;,
+            &quot;database.password&quot;: &quot;passw0rd&quot;,
+            &quot;database.dbname&quot;: &quot;postgres&quot;,
+            &quot;database.server.name&quot;: &quot;postgres&quot;,
+            &quot;table.whitelist&quot;: &quot;public.people&quot;
+      }
+}&#39;
+</pre></div></p>
+<ol>
+<li>
+<p>List the Kafka Topics, showing your newly created topic
+<div class="codehilite"><pre><span></span>  $ kubectl -n kafka-connect-tutorial exec kafka-client -- kafka-topics --zookeeper kafka-zookeeper:2181 --list
+</pre></div></p>
+</li>
+<li>
+<p>Tail the Kafka <code>postgres.public.people</code> topic to show database transactions being written to the topic from Kafka Connect.</p>
+</li>
+</ol>
+<p><strong>Note:</strong> Change <code>postgres.public.people</code> if you are not using the sample database data
+<div class="codehilite"><pre><span></span>  $ kubectl -n kafka-connect-tutorial exec kafka-client -- kafka-console-consumer --topic postgres.public.people --from-beginning --bootstrap-server kafka:9092
+</pre></div></p>
+<p>You may continue to make Create, Update and Delete transactions to the <code>people</code> table, these changes will appear as messages in the Kafka topic.</p>
+<h2 id="cleanup">Cleanup</h2>
+<p>This section will help you remove all of the resources created during this tutorial.</p>
+<ol>
+<li>
+<p>Delete the Kafka Helm Release
+<div class="codehilite"><pre><span></span>  $ helm delete kafka --purge
+</pre></div></p>
+</li>
+<li>
+<p>Delete the PostgreSQL Helm Release
+<div class="codehilite"><pre><span></span>  $ helm delete postgres --purge
+</pre></div></p>
+</li>
+<li>
+<p>Delete the <code>kafka-connect-tutorial</code> namespace
+<div class="codehilite"><pre><span></span>  $ kubectl delete namespace kafka-connect-tutorial
+</pre></div></p>
+</li>
+</ol>
+<h2 id="references">References</h2>
+<p><a href="https://debezium.io/documentation/reference/0.10/tutorial.html">Debezium Tutorial</a></p>
+<p><a href="https://debezium.io/documentation/reference/0.10/postgres-plugins.html">PostgreSQL plugins/configuration required for Debezium</a></p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../mq-kafka/" title="MQ - Kafka" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                MQ - Kafka
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../eventstreams-debezium/" title="Event Streams - Debezium" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Event Streams - Debezium
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.b806dc00.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      
+    
+  </body>
+</html>

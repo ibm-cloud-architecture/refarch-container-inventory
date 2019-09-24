@@ -36,7 +36,7 @@
     
     
       
-        <title>Create foundations - Container inventory legacy app</title>
+        <title>Deploy and run locally - Container inventory legacy app</title>
       
     
     
@@ -96,7 +96,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#creating-app-from-command-line" tabindex="1" class="md-skip">
+      <a href="#creating-the-invdb-in-db2" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -121,7 +121,7 @@
               Container inventory legacy app
             </span>
             <span class="md-header-nav__topic">
-              Create foundations
+              Deploy and run locally
             </span>
           
         </div>
@@ -241,12 +241,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
     
     <label class="md-nav__link" for="nav-2">
       Development approach
@@ -262,76 +260,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Create foundations
-      </label>
-    
-    <a href="./" title="Create foundations" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../creatingApp/" title="Create foundations" class="md-nav__link">
       Create foundations
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#requirements" title="Requirements" class="md-nav__link">
-    Requirements
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-1-create-the-foundation" title="Step 1: Create the foundation" class="md-nav__link">
-    Step 1: Create the foundation
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-2-build-and-run" title="Step 2: Build and  Run" class="md-nav__link">
-    Step 2: Build and  Run
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#endpoints" title="Endpoints" class="md-nav__link">
-    Endpoints
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -404,10 +337,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
     
     <label class="md-nav__link" for="nav-4">
       Solution Deployments
@@ -423,11 +358,73 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../run-local/" title="Deploy and run locally" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Deploy and run locally
+      </label>
+    
+    <a href="./" title="Deploy and run locally" class="md-nav__link md-nav__link--active">
       Deploy and run locally
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#creating-the-invdb-in-db2" title="Creating the INVDB in DB2" class="md-nav__link">
+    Creating the INVDB in DB2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-the-jee-inventory-webapp" title="Build the jee-inventory webapp" class="md-nav__link">
+    Build the jee-inventory webapp
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-the-webapp-with-maven" title="Start the webapp with maven" class="md-nav__link">
+    Start the webapp with maven
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-the-mq-image-with-the-queue-configuration" title="Create the MQ image with the queue configuration" class="md-nav__link">
+    Create the MQ image with the queue configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-the-solution-using-docker-compose" title="Start the solution using docker compose" class="md-nav__link">
+    Start the solution using docker compose
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -474,43 +471,42 @@
 <nav class="md-nav md-nav--secondary">
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">Table of contents</label>
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#requirements" title="Requirements" class="md-nav__link">
-    Requirements
+  <a href="#creating-the-invdb-in-db2" title="Creating the INVDB in DB2" class="md-nav__link">
+    Creating the INVDB in DB2
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-1-create-the-foundation" title="Step 1: Create the foundation" class="md-nav__link">
-    Step 1: Create the foundation
+  <a href="#build-the-jee-inventory-webapp" title="Build the jee-inventory webapp" class="md-nav__link">
+    Build the jee-inventory webapp
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-2-build-and-run" title="Step 2: Build and  Run" class="md-nav__link">
-    Step 2: Build and  Run
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#endpoints" title="Endpoints" class="md-nav__link">
-    Endpoints
+  <a href="#start-the-webapp-with-maven" title="Start the webapp with maven" class="md-nav__link">
+    Start the webapp with maven
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#create-the-mq-image-with-the-queue-configuration" title="Create the MQ image with the queue configuration" class="md-nav__link">
+    Create the MQ image with the queue configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-the-solution-using-docker-compose" title="Start the solution using docker compose" class="md-nav__link">
+    Start the solution using docker compose
+  </a>
   
 </li>
       
@@ -530,58 +526,122 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/ibm-cloud-architecture/refarch-container-inventory/edit/master/docs/creatingApp.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/ibm-cloud-architecture/refarch-container-inventory/edit/master/docs/run-local.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="creating-app-from-command-line">Creating app from command line</h1>
-<p>The goal of this article is to go over a test driven and devops approach to develop this service. </p>
-<p>To create the microprofile app we used the ibmcloud CLI. (version 2.2.0 used).</p>
-<h2 id="requirements">Requirements</h2>
+                  <h1>Deploy and run locally</h1>
+                
+                <h2 id="creating-the-invdb-in-db2">Creating the INVDB in DB2</h2>
+<div class="admonition note">
+<p class="admonition-title">Note<p>The creation of the INVDB database with the containers table and some test data should be done only one time, or each time you delete the <code>db2/database</code> folder.</p>
+</p>
+</div>
+<p>Go to the <code>db2</code> folder and start the db2 server with the script:</p>
+<div class="codehilite"><pre><span></span>./startDB2.sh
+</pre></div>
+
+<p>This will download a development docker image for DB2 and configure the INVDB database. The container table needs to be added using the following steps within the docker shell:</p>
 <ul>
-<li><a href="https://maven.apache.org/install.html">Maven</a></li>
-<li>Java 8: Any compliant JVM should work.</li>
-<li><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java 8 JDK from Oracle</a></li>
-<li><a href="http://www.ibm.com/developerworks/java/jdk/">Java 8 JDK from IBM (AIX, Linux, z/OS, IBM i)</a>,
-    or <a href="https://developer.ibm.com/assets/wasdev/#filter/assetTypeFilters=PRODUCT">Download a Liberty server package</a>
-    that contains the IBM JDK (Windows, Linux)</li>
+<li>
+<p>Start the bash session</p>
+<div class="codehilite"><pre><span></span>docker exec -ti db2 bash
+</pre></div>
+
+</li>
+<li>
+<p>Then swap to db2inst1 user and use the scripts that were mounted under /home</p>
+<div class="codehilite"><pre><span></span>su - db2inst1
+cd /home/sql/inventory
+./createDB.sh
+</pre></div>
+
+<p>The trace should look like:</p>
+<div class="codehilite"><pre><span></span>INVDB
+
+ Database Connection Information ...
+
+Containers table not found so let create it
+create table containers ( containerid VARCHAR(30) NOT NULL, type VARCHAR(20), status VARCHAR(20), brand VARCHAR(50), capacity DECIMAL, CREATIONDATE TIMESTAMP, UPDATEDATE TIMESTAMP, PRIMARY KEY (containerid) )
+DB20000I  The SQL command completed successfully.
+There is no data in inventory DB, let add some...
+INSERT INTO containers (containerid, type, status, brand, capacity) 
+
+VALUES (&#39;C01&#39;,&#39;Reefer&#39;,&#39;Operational&#39;,&#39;containerbrand&#39;,20), 
+(&#39;C02&#39;,&#39;Dry&#39;,&#39;Operational&#39;,&#39;containerbrand&#39;,20), 
+(&#39;C03&#39;,&#39;Dry&#39;,&#39;Operational&#39;,&#39;containerbrand&#39;,40), (&#39;C04&#39;,&#39;FlatRack&#39;,&#39;Operational&#39;,&#39;containerbrand&#39;,40), 
+(&#39;C05&#39;,&#39;OpenTop&#39;,&#39;Operational&#39;,&#39;containerbrand&#39;,40),
+(&#39;C06&#39;,&#39;OpenSide&#39;,&#39;Operational&#39;,&#39;containerbrand&#39;,40), 
+(&#39;C07&#39;,&#39;Tunnel&#39;,&#39;Operational&#39;,&#39;containerbrand&#39;,40), 
+(&#39;C08&#39;,&#39;Tank&#39;,&#39;Operational&#39;,&#39;containerbrand&#39;,40), 
+(&#39;C09&#39;,&#39;Thermal&#39;,&#39;Operational&#39;,&#39;containerbrand&#39;,20)
+
+DB20000I  The SQL command completed successfully.
+</pre></div>
+
+</li>
+<li>
+<p>Exit the shell sessions. The database is created under the db2 folder, and it is git ignored.</p>
+</li>
+<li>
+<p>Stop DB2 docker instance with <code>docker stop db2</code></p>
+</li>
+<li>Tag the image of the container so we can reuse the same database.</li>
 </ul>
-<h2 id="step-1-create-the-foundation">Step 1: Create the foundation</h2>
+<div class="codehilite"><pre><span></span>ID=$(docker ps -l|grep db2|awk &#39;{print $1}&#39;) 
+docker commit --author=&quot;IBMCASE&quot; $ID ibmcase/greendb2
+</pre></div>
+
+<p>This docker image will be used in the docker compose settings to run the solution locally. Also the <code>ibncase/greendb2</code> is available in public docker hub.</p>
+<h2 id="build-the-jee-inventory-webapp">Build the jee-inventory webapp</h2>
+<div class="codehilite"><pre><span></span>mvn package -DskipIT
+</pre></div>
+
+<p>This will build the containerinventory.war file and prepare Liberty defaultServer without running the Integration tests. </p>
+<h2 id="start-the-webapp-with-maven">Start the webapp with maven</h2>
+<p>To start the web app</p>
+<div class="codehilite"><pre><span></span>mvn liberty:run-server
+</pre></div>
+
+<p>Point the browser to the following address:</p>
 <ul>
-<li>Login to IBM Cloud, and set the target to an existing organization and space</li>
+<li>Verify the app is up and running <code>http://localhost:9080/health</code></li>
+<li>Get the list of all containers: <code>http://localhost:9080/containers</code></li>
+<li>Get a container using its ID: <code>http://localhost:9080/containers/C02</code></li>
+<li>Get the private api <code>https://localhost:9443/ibm/api</code> use the admin user and password as defined in the <code>src/main/liberty/config/server.xml</code> file.</li>
 </ul>
-<div class="codehilite"><pre><span></span>ibmcloud login -a https://cloud.ibm.com  -u &lt;username&gt;
-ibmcloud target -o cent@us.ibm.com -s Cognitive
+<h2 id="create-the-mq-image-with-the-queue-configuration">Create the MQ image with the queue configuration</h2>
+<div class="admonition note">
+<p class="admonition-title">Note<p>Queue manager and queue data are saved in the filesystem. To avoid losing the queue manager and queue data, we use docker volumes. Volumes are attached to containers when they are run and persist after the container is deleted. The following command creates a volume name <code>qm1data</code></p>
+</p>
+</div>
+<p>Work under the <code>mq-config</code> folder.</p>
+<div class="codehilite"><pre><span></span><span class="nb">cd</span> mq-config
+docker volume create qm1data
 </pre></div>
 
-<ul>
-<li>Create the foundation for an app</li>
-</ul>
-<div class="codehilite"><pre><span></span>ibmcloud dev create
+<p>The remote MQ clients use a <code>Channel</code> to communicate with the MQ manager over the network. We need to create a virtual docker network to support this communication. The command below creates such network:</p>
+<div class="codehilite"><pre><span></span>docker network create mq-network
 </pre></div>
 
-<p>Then select the appropriate options. For our case there are:</p>
-<div class="codehilite"><pre><span></span>* Backend Service / Web App
-* Java - MicroProfile / Java EE
-* Java Microservice with Eclipse MicroProfile and Java EE
-* IBM DevOps, deploy to Kubernetes containers
+<p>The folder mq-config includes the <code>20-config.mqsc</code> file to define the queues to be used to communicate with Kafka.</p>
+<div class="codehilite"><pre><span></span>define ql(&#39;TO.CONTAINERS&#39;)
+define ql(&#39;FROM.CONTAINERS&#39;)
 </pre></div>
 
-
-<h2 id="step-2-build-and-run">Step 2: Build and  Run</h2>
-<p>To build and run the application:</p>
-<ol>
-<li><code>mvn install</code></li>
-<li><code>mvn liberty:run-server</code></li>
-</ol>
-<p>To run the application in Docker use the Docker file called <code>Dockerfile</code>:</p>
-<div class="codehilite"><pre><span></span>
+<p>The goal is to take the IBM MQ development image and move this configuration file inside the image.</p>
+<div class="codehilite"><pre><span></span>docker build -t ibmcase/mq .
 </pre></div>
 
-<p>If you do not want to install Maven locally you can use <code>Dockerfile-tools</code> to build a container with Maven installed.</p>
-<h3 id="endpoints">Endpoints</h3>
-<p>The application exposes the following endpoints:
-* Health endpoint: <code>&lt;host&gt;:&lt;port&gt;/&lt;contextRoot&gt;/health</code></p>
-<p>The context root is set in the <code>src/main/webapp/WEB-INF/ibm-web-ext.xml</code> file. The ports are set in the pom.xml file and exposed to the CLI in the cli-config.yml file.</p>
+<p>For more information of the IBM MQ image see <a href="https://hub.docker.com/r/ibmcom/mq/">this note</a> and <a href="https://github.com/ibm-messaging/mq-container/blob/master/docs/usage.md">how to use the MQ container</a>.</p>
+<p>The scripts <code>runMQlocal.sh</code> uses docker and the IBM MQ docker image to run MQ as a daemon. This is helpful when developing the JMS consumer and producer code, but we recommend to use the docker-compose to start both MQ and DB2.</p>
+<p>Going to the console: <a href="https://localhost:9443/ibmmq/console/login.html">https://localhost:9443/ibmmq/console/login.html</a> to login using the admin user. See instructions <a href="https://github.com/ibm-messaging/mq-container/blob/master/docs/developer-config.md">in this note</a>.</p>
+<p><img alt="" src="../images/mq-console.png" /></p>
+<h2 id="start-the-solution-using-docker-compose">Start the solution using docker compose</h2>
+<p>Under the project folder, use the following command to start both DB2 and MQ</p>
+<div class="codehilite"><pre><span></span>docker-compose up
+</pre></div>
+
+<p>The docker-compose.yml file defines the two services, one volume for MQ and the mq network.</p>
                 
                   
                 
@@ -602,7 +662,7 @@ ibmcloud target -o cent@us.ibm.com -s Cognitive
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href=".." title="Introduction" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../eventstreams-debezium/" title="Event Streams - Debezium" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -611,19 +671,19 @@ ibmcloud target -o cent@us.ibm.com -s Cognitive
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Introduction
+                Event Streams - Debezium
               </span>
             </div>
           </a>
         
         
-          <a href="../mq-kafka/" title="MQ - Kafka" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../mq-cloud/" title="Running MQ on IBM Cloud" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                MQ - Kafka
+                Running MQ on IBM Cloud
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
