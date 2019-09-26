@@ -21,32 +21,32 @@ This section will guide you through downloading the Kafka Connect configuration 
 This section will guide you through building a Kafka Connect Image that includes the Debezium PostgreSQL connector. This section will use the package downloaded in the previous section.
 
 1. Unzip the ```kafkaconnect.zip``` file that was downloaded
-```
+```shell
   $ unzip kafkaconnect.zip -d kafkaconnect
 ```
 
 2. Delete the zipped ```kafkaconnect``` package
-```
+```shell
   $ rm kafkaconnect.zip
 ```
 
 3. Download the Debezium PostgreSQL Connector (v0.10.0.CR1) package from Maven Central
-```
+```shell
   $ wget https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/0.10.0.CR1/debezium-connector-postgres-0.10.0.CR1-plugin.tar.gz
 ```
 
 4. Untar the Debezium PostgreSQL Connector into the ```kafkaconnect/connectors``` directory
-```
+```shell
   $ tar -xvzf debezium-connector-postgres-0.10.0.CR1-plugin.tar.gz -C kafkaconnect/connectors
 ```
 
 5. Delete the Debezium PostgreSQL Connector tarball
-```
+```shell
   $ rm debezium-connector-postgres-0.10.0.CR1-plugin.tar.gz
 ```
 
 6. Build the Kafka Connect image with Docker
-```
+```shell
   $ docker build -t kafka-connect-debezium-postgres:0.0.1 kafkaconnect
 ```
 
@@ -55,42 +55,42 @@ This section will guide you through building a Kafka Connect Image that includes
 This section will guide you through uploading the Kafka Connect image to OpenShift. This will require SSH access to a cluster node. For alternative methods, please refer to the [OpenShift documentation](https://docs.openshift.com/container-platform/3.11/dev_guide/managing_images.html).
 
 1. Package the Docker image built in the last section as a tarball
-```
+```shell
   $ docker save kafka-connect-debezium-postgres:0.0.1 --output kafka-connect-debezium-postgres-0-0-1.tar
 ```
 
 2. Upload the image tarball to one of the cluster nodes using SCP. For example a cluster node at ```192.168.10.2``` using user ```root```
-```
+```shell
   $ scp kafka-connect-debezium-postgres-0-0-1.tar root@192.168.10.2:/root/
 ```
 
 3. SSH into the cluster node
-```
+```shell
   $ ssh root@192.168.10.2
 ```
 
 4. Load the uploaded image tarball into the local Docker repository
-```
+```shell
   $ docker load --input kafka-connect-debezium-postgres-0-0-1.tar
 ```
 
 5. Login to your OpenShift cluster with the ```oc``` command
-```
+```shell
   $ oc login
 ```
 
 6. Login to the OpenShift Docker registry, this assumes that the registry is installed at the default location ```docker-registry.default.svc.cluster.local:5000```
-```
+```shell
   $ docker login -u any_value -p $(oc whoami -t) docker-registry.default.svc.cluster.local:5000
 ```
 
 7. Tag the Kafka Connect image with an appropriate registry location. Replace ```your-namespace-here``` with the namespace where you will deploy Kafka Connect, if deploying to another namespace
-```
+```shell
   $ docker tag kafka-connect-debezium-postgres:0.0.1 docker-registry.default.svc.cluster.local:5000/your-namespace-here/kafka-connect-debezium-postgres:0.0.1
 ```
 
 8. Push the image up to the OpenShift Docker registry, replacing ```your-namespace-here``` with the namespace you specified in the last step
-```
+```shell
   $ docker push docker-registry.default.svc.cluster.local:5000/your-namespace-here/kafka-connect-debezium-postgres:0.0.1
 ```
 
@@ -99,22 +99,22 @@ This section will guide you through uploading the Kafka Connect image to OpenShi
 This section will guide you through deploying Kafka Connect on OpenShift using the image that you uploaded in the last section. Kafka Connect will be exposed as a NodePort service on port ```30500``` of your cluster nodes.
 
 1. Return to the workspace that contains the ```kafkaconnect``` directory that was downloaded in the first section, and login to your OpenShift cluster
-```
+```shell
   $ oc login
 ```
 
 2. Upload ```connect-distributed.properties``` as a Secret in the OpenShift namespace where you will deploy Kafka Connect (replacing ```your-namespace-here```)
-```
+```shell
   $ oc create secret generic --namespace your-namespace-here --from-file kafkaconnect/config/connect-distributed.properties connect-distributed-config
 ```
 
 3. Upload ```connect-log4j.properties``` as a ConfigMap in the OpenShift namespace where you will deploy Kafka Connect (replacing ```your-namespace-here```)
-```
+```shell
   $ oc create configmap --namespace your-namespace-here --from-file kafkaconnect/config/connect-log4j.properties connect-log4j-config
 ```
 
 4. Create a file in your workspace named ```kafka-connect-deploy.yaml``` with the following contents. Replace the value of ```spec.template.spec.containers.0.image``` with the image name that you uploaded in the last section
-```
+```yaml
   # Deployment
   apiVersion: apps/v1
   kind: Deployment
@@ -183,7 +183,7 @@ This section will guide you through deploying Kafka Connect on OpenShift using t
 ```
 
 5. Deploy Kafka Connect (replacing ```your-namespace-here```)
-```
+```shell
   $ oc create --namespace your-namespace-here -f kafka-connect-deploy.yaml
 ```
 
@@ -213,35 +213,56 @@ This section will guide you through the installation of PostgreSQL using the Sta
 ```
 
 2. Create a ConfigMap from the ```extended.conf``` file with the following command (replacing ```your-namespace-here```)
-```
+```shell
   $ oc create configmap --namespace your-namepace-here --from-file=extended.conf postgresql-config
 ```
 
 3. Install PostgreSQL using the Stable Helm Chart with the following command (replacing ```your-namespace-here```). For more configuration options, refer to the [PostgreSQL Helm Chart](https://github.com/helm/charts/blob/master/stable/postgresql/README.md)
-```
+```shell
   $ helm install --name postgres --namespace your-namespace-here --set extendedConfConfigMap=postgresql-config --set service.type=NodePort --set service.nodePort=30600 --set postgresqlPassword=passw0rd --set securityContext.runAsUser=5000 --set volumePermissions.securityContext.runAsUser=5000 stable/postgresql --tls
 ```
 
 4. Finally, connect to your PostgreSQL instance with your favorite PostgreSQL client and create a table with data. Note that the ```psql``` client is installed on the postgres container. You may ```exec``` into the postgres container and use psql from there.
-```
+```shell
   $ oc exec --namespace your-namespace-here -it postgres-postgresql-0 -- /bin/sh
 ```
-```
+```shell
   $ psql login --user postgres
+```
+
+## Add Sample Data to PostgreSQL
+1. Open a shell in the Postgres container.
+```shell
+  $ kubectl exec --namespace your-namespace-here -it postgres-postgresql-0  -- /bin/sh
+```
+
+2. Login to Postgres with the following command, entering the password ```passw0rd``` when prompted (this is the password set from the ```helm install``` command in the previous section).
+```shell
+  $ psql --user postgres
+```
+
+3. Create a table named ```containers```.
+```sql
+  CREATE TABLE containers(containerid VARCHAR(30) NOT NULL,type VARCHAR(20),status VARCHAR(20),brand VARCHAR(50),capacity DECIMAL,CREATIONDATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP,UPDATEDATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP,PRIMARY KEY (containerid));
+```
+
+4. Insert data into the table.
+```sql
+  INSERT INTO containers (containerid, type, status, brand, capacity) VALUES ('C01','Reefer','Operational','containerbrand',20), ('C02','Dry','Operational','containerbrand',20), ('C03','Dry','Operational','containerbrand',40), ('C04','FlatRack','Operational','containerbrand',40), ('C05','OpenTop','Operational','containerbrand',40), ('C06','OpenSide','Operational','containerbrand',40), ('C07','Tunnel','Operational','containerbrand',40), ('C08','Tank','Operational','containerbrand',40), ('C09','Thermal','Operational','containerbrand',20);
 ```
 
 ## Configure a Debezium Kafka Connect Connector
 
 After you have a configured PostgreSQL instance, you may then configure a new Debezium Kafka Connect connector for PostgreSQL. Kafka Connect connectors are configured by making a request to the Kafka Connect API endpoint.
 
-The following shows a configuration of a PostgreSQL instance at ```postgres-postgresql.your-namespace-here.svc.cluster.local``` on port ```5432``` with username ```postgres``` and password ```passw0rd```. The database is ```postgres``` with table ```public.people```. In this example, we are using the ```pgoutput``` logical decoding output plugin. Also, we are using the ```cURL``` HTTP client to make a call to the Kafka Connect API at ```http://192.168.10.2:30500``` since ```192.168.10.2``` is one our cluster nodes and the Kafka Connect API is exposed as a ```NodePort``` on port ```30500```.
+The following shows a configuration of a PostgreSQL instance at ```postgres-postgresql.your-namespace-here.svc.cluster.local``` on port ```5432``` with username ```postgres``` and password ```passw0rd```. The database is ```postgres``` with table ```public.containers```. In this example, we are using the ```pgoutput``` logical decoding output plugin. Also, we are using the ```cURL``` HTTP client to make a call to the Kafka Connect API at ```http://192.168.10.2:30500``` since ```192.168.10.2``` is one our cluster nodes and the Kafka Connect API is exposed as a ```NodePort``` on port ```30500```.
 
-```
+```shell
 curl -X POST \
   http://192.168.10.2:30500/connectors \
   -H 'Content-Type: application/json' \
   -d '{
-	"name": "people-connector",
+	"name": "containers-connector",
 	"config": {
 	        "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
 	        "plugin.name": "pgoutput",
@@ -251,9 +272,9 @@ curl -X POST \
 	        "database.password": "passw0rd",
 	        "database.dbname": "postgres",
 	        "database.server.name": "postgres",
-	        "table.whitelist": "public.people"
+	        "table.whitelist": "public.containers"
 	  }
 }'
 ```
 
-You should then be able to return to the Event Streams UI, navigating to the "Topics" section. You can then click on "postgres.public.people" (or whatever your table name is) to see your newly created topic. Then, click on "Messages" to view the messages that Debezium has written to the topic.
+You should then be able to return to the Event Streams UI, navigating to the "Topics" section. You can then click on "postgres.public.containers" (or whatever your table name is) to see your newly created topic. Then, click on "Messages" to view the messages that Debezium has written to the topic.
