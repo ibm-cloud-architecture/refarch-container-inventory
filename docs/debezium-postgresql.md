@@ -42,10 +42,10 @@ This section will guide you through the installation of Kafka & Zookeeper. You w
       $ helm install --name kafka --namespace kafka-connect-tutorial incubator/kafka --set external.enabled=true
     ```
 
-2. Deploy a Kafka Connect client container to your cluster by creating a file in your workspace named 
+2. Deploy a Kafka Connect client container to your cluster by creating a file in your workspace named
 `kafka-client-deploy.yaml` with the following contents:
 
-    ```shell
+    ```yaml
     # kafka-client-deploy.yaml
 
     apiVersion: v1
@@ -64,19 +64,19 @@ This section will guide you through the installation of Kafka & Zookeeper. You w
 
 3. Execute the following command to deploy the Kafka Client Pod:
 
-    ```
+    ```shell
     $ kubectl create -f kafka-client-deploy.yaml -n kafka-connect-tutorial
     ```
 
 4. Create the Kafka Connect Topics using the following commands:
 
-    ```
+    ```shell
     $ kubectl -n kafka-connect-tutorial exec kafka-client -- kafka-topics --zookeeper kafka-zookeeper:2181 --topic connect-offsets --create --partitions 1 --replication-factor 1
     ```
-    ```
+    ```shell
     $ kubectl -n kafka-connect-tutorial exec kafka-client -- kafka-topics --zookeeper kafka-zookeeper:2181 --topic connect-configs --create --partitions 1 --replication-factor 1
     ```
-    ```
+    ```shell
     $ kubectl -n kafka-connect-tutorial exec kafka-client -- kafka-topics --zookeeper kafka-zookeeper:2181 --topic connect-status --create --partitions 1 --replication-factor 1
     ```
 
@@ -84,7 +84,7 @@ This section will guide you through the installation of Kafka & Zookeeper. You w
 This section will guide you through the installation of Kafka Connect using the Debezium Kafka Connect Docker Image. As part of this installation, you will create a NodePort service to expose the Kafka Connect API. This service will be available on port 30500 of your cluster nodes. If you are using Docker Desktop, this will be http://localhost:30500.
 
 1. Create a file named ```kafka-connect-deploy.yaml``` in your workspace and add the following contents:
-```
+```yaml
   # kafka-connect-deploy.yaml
 
   apiVersion: apps/v1
@@ -145,7 +145,7 @@ This section will guide you through the installation of Kafka Connect using the 
         app: kafkaconnect
 ```
 2. Deploy Kafka Connect with the following command:
-```
+```shell
   $ kubectl create -f kafka-connect-deploy.yaml --namespace kafka-connect-tutorial
 ```
 
@@ -162,51 +162,51 @@ This section will guide you through the installation of PostgreSQL using the Sta
 ```
 
 2. Create a ConfigMap from the ```extended.conf``` file with the following command:
-```
+```shell
   $ kubectl create configmap --namespace kafka-connect-tutorial --from-file=extended.conf postgresql-config
 ```
 
 3. Install PostgreSQL using the Stable Helm Chart with the following command:
-```
+```shell
   $ helm install --name postgres --namespace kafka-connect-tutorial --set extendedConfConfigMap=postgresql-config --set service.type=NodePort --set service.nodePort=30600 --set postgresqlPassword=passw0rd stable/postgresql
 ```
 
 ## Add Sample Data to PostgreSQL
 1. Open a shell in the Postgres container.
-```
+```shell
   $ kubectl exec --namespace kafka-connect-tutorial -it postgres-postgresql-0  -- /bin/sh
 ```
 
 2. Login to Postgres with the following command, entering the password ```passw0rd``` when prompted.
-```
+```shell
   $ psql --user postgres
 ```
 
-3. Create a table named ```people```.
-```
-  $ CREATE TABLE people(id SERIAL PRIMARY KEY,name VARCHAR(20),creationdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,updatedate TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+3. Create a table named ```containers```.
+```sql
+  CREATE TABLE containers(containerid VARCHAR(30) NOT NULL,type VARCHAR(20),status VARCHAR(20),brand VARCHAR(50),capacity DECIMAL,CREATIONDATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP,UPDATEDATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP,PRIMARY KEY (containerid));
 ```
 
 4. Insert data into the table.
-```
-  $ INSERT INTO people (name) VALUES ('Rachel'),('Thomas'),('Benjamin'),('Allison'),('Todd');
+```sql
+  INSERT INTO containers (containerid, type, status, brand, capacity) VALUES ('C01','Reefer','Operational','containerbrand',20), ('C02','Dry','Operational','containerbrand',20), ('C03','Dry','Operational','containerbrand',40), ('C04','FlatRack','Operational','containerbrand',40), ('C05','OpenTop','Operational','containerbrand',40), ('C06','OpenSide','Operational','containerbrand',40), ('C07','Tunnel','Operational','containerbrand',40), ('C08','Tank','Operational','containerbrand',40), ('C09','Thermal','Operational','containerbrand',20);
 ```
 
 
 ## Configure the Debezium PostgreSQL connector
 This section will show you how to configure the Debezium PostgreSQL connector.
 
-1. Using your HTTP client (cURL shown), make the following request to the Kafka Connect API. This will configure a new Debezium PostgreSQL connector. This connector monitors the ```pgoutput``` stream for operations on the ```people``` table.
+1. Using your HTTP client (cURL shown), make the following request to the Kafka Connect API. This will configure a new Debezium PostgreSQL connector. This connector monitors the ```pgoutput``` stream for operations on the ```containers``` table.
 
   **Note:** If you are not using Docker Desktop, please set ```localhost``` to the hostname/IP of one of your cluster nodes.
 
   **Note:** If you did not follow the [Add Sample Data to PostgreSQL](#add-sample-data-to-postgresql) section, replace ```"public.containers"``` with the name of your table.
-```
+```shell
 curl -X POST \
   http://localhost:30500/connectors \
   -H 'Content-Type: application/json' \
   -d '{
-	"name": "people-connector",
+	"name": "containers-connector",
 	"config": {
 	        "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
 	        "plugin.name": "pgoutput",
@@ -216,40 +216,40 @@ curl -X POST \
 	        "database.password": "passw0rd",
 	        "database.dbname": "postgres",
 	        "database.server.name": "postgres",
-	        "table.whitelist": "public.people"
+	        "table.whitelist": "public.containers"
 	  }
 }'
 ```
 
 2. List the Kafka Topics, showing your newly created topic
-```
+```shell
   $ kubectl -n kafka-connect-tutorial exec kafka-client -- kafka-topics --zookeeper kafka-zookeeper:2181 --list
 ```
 
-3. Tail the Kafka ```postgres.public.people``` topic to show database transactions being written to the topic from Kafka Connect.
+3. Tail the Kafka ```postgres.public.containers``` topic to show database transactions being written to the topic from Kafka Connect.
 
-  **Note:** Change ```postgres.public.people``` if you are not using the sample database data
-```
-  $ kubectl -n kafka-connect-tutorial exec kafka-client -- kafka-console-consumer --topic postgres.public.people --from-beginning --bootstrap-server kafka:9092
+  **Note:** Change ```postgres.public.containers``` if you are not using the sample database data
+```shell
+  $ kubectl -n kafka-connect-tutorial exec kafka-client -- kafka-console-consumer --topic postgres.public.containers --from-beginning --bootstrap-server kafka:9092
 ```
 
-You may continue to make Create, Update and Delete transactions to the ```people``` table, these changes will appear as messages in the Kafka topic.
+You may continue to make Create, Update and Delete transactions to the ```containers``` table, these changes will appear as messages in the Kafka topic.
 
 ## Cleanup
 This section will help you remove all of the resources created during this tutorial.
 
 1. Delete the Kafka Helm Release
-```
+```shell
   $ helm delete kafka --purge
 ```
 
 2. Delete the PostgreSQL Helm Release
-```
+```shell
   $ helm delete postgres --purge
 ```
 
 3. Delete the ```kafka-connect-tutorial``` namespace
-```
+```shell
   $ kubectl delete namespace kafka-connect-tutorial
 ```
 
