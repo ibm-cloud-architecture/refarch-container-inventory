@@ -4,9 +4,14 @@ nav:
   - Introduction: index.md
   - Development approach:
     - Create foundations: creatingApp.md
-    - Apply TDD: tdd.md
+  - Integrations:
+    - MQ - Kafka: mq-kafka.md
+    - Postgres - Debezium to kafka: debezium-postgresql.md
+    - Event Streams - Debezium: eventstreams-debezium.md
   - Solution Deployments:
-    - Run locally: /#build-and-run
+    - Deploy and run locally: run-local.md
+    - Running MQ on IBM Cloud: mq-cloud.md
+    - Deploy and run on Openshift: openshift.md
 
 theme: 
   name: material

@@ -1,71 +1,84 @@
 # Streaming PostgreSQL Updates to Kafka with Debezium
+
 This guide will help you get up and running with Kafka Connect to stream PostgreSQL database changes to a Kafka topic. It will guide you through the installation and configuration of Kafka, Kafka Connect, Debezium & PostgreSQL.
 
 **Note: This guide has only been tested using Docker Desktop for Mac. Results may vary using other Kubernetes cluster types.**
 
 This guide assumes that you have the following:
-- Access to a Kubernetes Cluster
-- Helm (w/ Tiller) installed on the Kubernetes Cluster
-- Helm Incubator repository enabled
-- cURL, Postman or another HTTP client
+
+* Access to a Kubernetes Cluster
+* Helm (w/ Tiller) installed on the Kubernetes Cluster
+* Helm Incubator repository enabled
+* cURL, Postman or another HTTP client
 
 If you do not meet the prerequisites, please see the following links:
-- [Getting Started with Kubernetes with Docker on Mac](https://rominirani.com/tutorial-getting-started-with-kubernetes-with-docker-on-mac-7f58467203fd)
-- [Install Helm](https://helm.sh/docs/using_helm/)
-- [Enable Helm Incubator repository](https://github.com/helm/charts#how-do-i-enable-the-incubator-repository)
-- [Install Postman](https://www.getpostman.com/downloads/)
+
+* [Getting Started with Kubernetes with Docker on Mac](https://rominirani.com/tutorial-getting-started-with-kubernetes-with-docker-on-mac-7f58467203fd)
+* [Install Helm](https://helm.sh/docs/using_helm/)
+* [Enable Helm Incubator repository](https://github.com/helm/charts#how-do-i-enable-the-incubator-repository)
+* [Install Postman](https://www.getpostman.com/downloads/)
 
 ## Initial Setup
+
 To keep this tutorial isolated from other application running in your Kubernetes cluster and to cleanup easier, we will create a separate namespace for the new resources.
-```
+
+```shell
   $ kubectl create namespace kafka-connect-tutorial
 ```
 
 (Optional) You may configure your Kubernetes context's default namespace to ```kafka-connect-tutorial``` using the following command:
-```
+
+```shell
   $ kubectl config set-context --current --namespace kafka-connect-tutorial
 ```
 
 ## Install Kafka & Zookeeper
+
 This section will guide you through the installation of Kafka & Zookeeper. You will also deploy a Kafka client pod to interact with the Kafka Cluster, as well as configure 3 Kafka Topics that will be used by Kafka Connect.
 
 1. Install Kafka & Zookeeper to your namespace using the Incubator Helm Chart.
-```
-  $ helm install --name kafka --namespace kafka-connect-tutorial incubator/kafka --set external.enabled=true
-```
-2. Deploy a Kafka Connect client container to your cluster by creating a file in your workspace named ```kafka-client-deploy.yaml``` with the following contents:
-```
-  # kafka-client-deploy.yaml
 
-  apiVersion: v1
-  kind: Pod
-  metadata:
-     name: kafka-client
-  spec:
-     containers:
-     - name: kafka-client
-       image: confluentinc/cp-kafka:5.0.1
-       command:
-         - sh
-         - -c
-         - "exec tail -f /dev/null"
-```
+    ```shell
+      $ helm install --name kafka --namespace kafka-connect-tutorial incubator/kafka --set external.enabled=true
+    ```
+
+2. Deploy a Kafka Connect client container to your cluster by creating a file in your workspace named 
+`kafka-client-deploy.yaml` with the following contents:
+
+    ```shell
+    # kafka-client-deploy.yaml
+
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: kafka-client
+    spec:
+      containers:
+      - name: kafka-client
+        image: confluentinc/cp-kafka:5.0.1
+        command:
+          - sh
+          - -c
+          - "exec tail -f /dev/null"
+    ```
 
 3. Execute the following command to deploy the Kafka Client Pod:
-```
-$ kubectl create -f kafka-client-deploy.yaml -n kafka-connect-tutorial
-```
+
+    ```
+    $ kubectl create -f kafka-client-deploy.yaml -n kafka-connect-tutorial
+    ```
 
 4. Create the Kafka Connect Topics using the following commands:
-```
-$ kubectl -n kafka-connect-tutorial exec kafka-client -- kafka-topics --zookeeper kafka-zookeeper:2181 --topic connect-offsets --create --partitions 1 --replication-factor 1
-```
-```
-$ kubectl -n kafka-connect-tutorial exec kafka-client -- kafka-topics --zookeeper kafka-zookeeper:2181 --topic connect-configs --create --partitions 1 --replication-factor 1
-```
-```
-$ kubectl -n kafka-connect-tutorial exec kafka-client -- kafka-topics --zookeeper kafka-zookeeper:2181 --topic connect-status --create --partitions 1 --replication-factor 1
-```
+
+    ```
+    $ kubectl -n kafka-connect-tutorial exec kafka-client -- kafka-topics --zookeeper kafka-zookeeper:2181 --topic connect-offsets --create --partitions 1 --replication-factor 1
+    ```
+    ```
+    $ kubectl -n kafka-connect-tutorial exec kafka-client -- kafka-topics --zookeeper kafka-zookeeper:2181 --topic connect-configs --create --partitions 1 --replication-factor 1
+    ```
+    ```
+    $ kubectl -n kafka-connect-tutorial exec kafka-client -- kafka-topics --zookeeper kafka-zookeeper:2181 --topic connect-status --create --partitions 1 --replication-factor 1
+    ```
 
 ## Install Kafka Connect
 This section will guide you through the installation of Kafka Connect using the Debezium Kafka Connect Docker Image. As part of this installation, you will create a NodePort service to expose the Kafka Connect API. This service will be available on port 30500 of your cluster nodes. If you are using Docker Desktop, this will be http://localhost:30500.
