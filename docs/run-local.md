@@ -1,30 +1,45 @@
+# Run the solution locally
+
+This is for development by running Db2 in docker on your laptop.
+
+
+Run the Liberty server locally with DB2 and MQ in docker containers.
+
+## Pre-requisites
+
+* Get docker and docker cli for your local environment
+* Get docker compose 
+
 
 ## Creating the INVDB in DB2
 
 !!! note
-        The creation of the INVDB database with the containers table and some test data should be done only one time, or each time you delete the `db2/database` folder.
+        The creation of the INVDB database with the containers table and some test data should be done only the first time, or each time you delete the `db2/database` folder.
 
 Go to the `db2` folder and start the db2 server with the script:
 
-```
+```shell
 ./startDB2.sh
+
+# which is the same as running the ibmcom/db2 community edition
+docker run -it --name db2 --privileged=true -p 50000:50000 -e LICENSE=accept -e DB2INST1_PASSWORD=db2inst1 -e DBNAME=INVDB -v $(pwd):/home -v $(pwd)/database:/database ibmcom/db2
 ```
 
 This will download a development docker image for DB2 and configure the INVDB database. The container table needs to be added using the following steps within the docker shell:
 
-* Start the bash session
+* Start the bash session within the db2 server
     
-    ```
-    docker exec -ti db2 bash
-    ```
+```
+docker exec -ti db2 bash
+```
 
-* Then swap to db2inst1 user and use the scripts that were mounted under /home
+* Then swap to `db2inst1` user and use the scripts that were mounted under /home
 
-    ```
-    su - db2inst1
-    cd /home/sql/inventory
-    ./createDB.sh
-    ```
+```
+su - db2inst1
+cd /home/sql/inventory
+./createDB.sh
+```
 
     The trace should look like:
 
@@ -62,29 +77,6 @@ docker commit --author="IBMCASE" $ID ibmcase/greendb2
 ```
 
 This docker image will be used in the docker compose settings to run the solution locally. Also the `ibncase/greendb2` is available in public docker hub.
-
-## Build the jee-inventory webapp
-
-```
-mvn package -DskipIT
-```
-
-This will build the containerinventory.war file and prepare Liberty defaultServer without running the Integration tests. 
-
-## Start the webapp with maven
-
-To start the web app
-
-```
-mvn liberty:run-server
-```
-
-Point the browser to the following address:
-
-* Verify the app is up and running `http://localhost:9080/health`
-* Get the list of all containers: `http://localhost:9080/containers`
-* Get a container using its ID: `http://localhost:9080/containers/C02`
-* Get the private api `https://localhost:9443/ibm/api` use the admin user and password as defined in the `src/main/liberty/config/server.xml` file.
 
 ## Create the MQ image with the queue configuration
 
@@ -125,6 +117,33 @@ The scripts `runMQlocal.sh` uses docker and the IBM MQ docker image to run MQ as
 Going to the console: [https://localhost:9443/ibmmq/console/login.html](https://localhost:9443/ibmmq/console/login.html) to login using the admin user. See instructions [in this note](https://github.com/ibm-messaging/mq-container/blob/master/docs/developer-config.md).
 
 ![](images/mq-console.png)
+
+
+
+
+## Build the jee-inventory webapp
+
+```
+mvn package -DskipIT
+```
+
+This will build the containerinventory.war file and prepare Liberty defaultServer without running the Integration tests. 
+
+## Start the webapp with maven
+
+To start the web app
+
+```
+mvn liberty:run
+```
+
+Point the browser to the following address:
+
+* Verify the app is up and running [http://localhost:9080/health](http://localhost:9080/health)
+* Get the list of all containers: [http://localhost:9080/containers](http://localhost:9080/containers)
+* Get a container using its ID: `http://localhost:9080/containers/C02`
+* Get the private api `https://localhost:9443/ibm/api` use the admin user and password as defined in the `src/main/liberty/config/server.xml` file.
+
 
 ## Start the solution using docker compose
 

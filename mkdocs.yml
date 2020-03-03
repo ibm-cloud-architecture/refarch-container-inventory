@@ -2,15 +2,13 @@ site_name: Container inventory legacy app
 repo_url: https://github.com/ibm-cloud-architecture/refarch-container-inventory
 nav:
   - Introduction: index.md
-  - Development approach:
-    - Create foundations: creatingApp.md
   - Integrations:
     - MQ - Kafka: mq-kafka.md
+    - CDC - Kafka: cdc.md
     - Postgres - Debezium to kafka: debezium-postgresql.md
     - Event Streams - Debezium: eventstreams-debezium.md
   - Solution Deployments:
     - Deploy and run locally: run-local.md
-    - Running MQ on IBM Cloud: mq-cloud.md
     - Deploy and run on Openshift: openshift.md
 
 theme: 
