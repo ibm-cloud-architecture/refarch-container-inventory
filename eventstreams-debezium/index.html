@@ -241,54 +241,18 @@
       
       
 
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
-    
-    <label class="md-nav__link" for="nav-2">
-      Development approach
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
-        Development approach
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../creatingApp/" title="Create foundations" class="md-nav__link">
-      Create foundations
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
   
 
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
     
-    <label class="md-nav__link" for="nav-3">
+    <label class="md-nav__link" for="nav-2">
       Integrations
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
+      <label class="md-nav__title" for="nav-2">
         Integrations
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -302,6 +266,18 @@
   <li class="md-nav__item">
     <a href="../mq-kafka/" title="MQ - Kafka" class="md-nav__link">
       MQ - Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../cdc/" title="CDC - Kafka" class="md-nav__link">
+      CDC - Kafka
     </a>
   </li>
 
@@ -406,6 +382,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#add-sample-data-to-postgresql" title="Add Sample Data to PostgreSQL" class="md-nav__link">
+    Add Sample Data to PostgreSQL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#configure-a-debezium-kafka-connect-connector" title="Configure a Debezium Kafka Connect Connector" class="md-nav__link">
     Configure a Debezium Kafka Connect Connector
   </a>
@@ -435,13 +418,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
     
-    <label class="md-nav__link" for="nav-4">
+    <label class="md-nav__link" for="nav-3">
       Solution Deployments
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-4">
+      <label class="md-nav__title" for="nav-3">
         Solution Deployments
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -455,18 +438,6 @@
   <li class="md-nav__item">
     <a href="../run-local/" title="Deploy and run locally" class="md-nav__link">
       Deploy and run locally
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../mq-cloud/" title="Running MQ on IBM Cloud" class="md-nav__link">
-      Running MQ on IBM Cloud
     </a>
   </li>
 
@@ -564,6 +535,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#add-sample-data-to-postgresql" title="Add Sample Data to PostgreSQL" class="md-nav__link">
+    Add Sample Data to PostgreSQL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#configure-a-debezium-kafka-connect-connector" title="Configure a Debezium Kafka Connect Connector" class="md-nav__link">
     Configure a Debezium Kafka Connect Connector
   </a>
@@ -648,12 +626,12 @@
 </li>
 <li>
 <p>Upload the image tarball to one of the cluster nodes using SCP. For example a cluster node at <code>192.168.10.2</code> using user <code>root</code>
-<div class="codehilite"><pre><span></span>  <span class="err">$</span> <span class="n">scp</span> <span class="n">kafka</span><span class="o">-</span><span class="n">connect</span><span class="o">-</span><span class="n">debezium</span><span class="o">-</span><span class="n">postgres</span><span class="o">-</span><span class="mi">0</span><span class="o">-</span><span class="mi">0</span><span class="o">-</span><span class="mf">1.</span><span class="n">tar</span> <span class="n">root</span><span class="mf">@192.168.10.2</span><span class="o">:/</span><span class="n">root</span><span class="o">/</span>
+<div class="codehilite"><pre><span></span>  $ scp kafka-connect-debezium-postgres-0-0-1.tar root@192.168.10.2:/root/
 </pre></div></p>
 </li>
 <li>
 <p>SSH into the cluster node
-<div class="codehilite"><pre><span></span>  <span class="err">$</span> <span class="n">ssh</span> <span class="n">root</span><span class="mf">@192.168.10.2</span>
+<div class="codehilite"><pre><span></span>  $ ssh root@192.168.10.2
 </pre></div></p>
 </li>
 <li>
@@ -668,7 +646,7 @@
 </li>
 <li>
 <p>Login to the OpenShift Docker registry, this assumes that the registry is installed at the default location <code>docker-registry.default.svc.cluster.local:5000</code>
-<div class="codehilite"><pre><span></span>  $ docker login -u any_value -p $(oc whoami -t) docker-registry.default.svc.cluster.local:5000
+<div class="codehilite"><pre><span></span>  $ docker login -u any_value -p <span class="k">$(</span>oc whoami -t<span class="k">)</span> docker-registry.default.svc.cluster.local:5000
 </pre></div></p>
 </li>
 <li>
@@ -702,71 +680,71 @@
 </li>
 <li>
 <p>Create a file in your workspace named <code>kafka-connect-deploy.yaml</code> with the following contents. Replace the value of <code>spec.template.spec.containers.0.image</code> with the image name that you uploaded in the last section
-<div class="codehilite"><pre><span></span>  # Deployment
-  apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: kafkaconnect-deploy
-    labels:
-      app: kafkaconnect
-  spec:
-    replicas: 1
-    selector:
-      matchLabels:
-        app: kafkaconnect
-    template:
-      metadata:
-        labels:
-          app: kafkaconnect
-      spec:
-        securityContext:
-          runAsNonRoot: true
-          runAsUser: 5000
-        containers:
-          - name: kafkaconnect-container
-            image: docker-registry.default.svc.cluster.local:5000/your-namespace-here/kafka-connect-debezium-postgres:0.0.1
-            readinessProbe:
-              httpGet:
-                path: /
-                port: 8083
-            livenessProbe:
-              httpGet:
-                path: /
-                port: 8083
-            ports:
-            - containerPort: 8083
-            volumeMounts:
-            - name: connect-config
-              mountPath: /opt/kafka/config/connect-distributed.properties
-              subPath: connect-distributed.properties
-            - name: connect-log4j
-              mountPath: /opt/kafka/config/connect-log4j.properties
-              subPath: connect-log4j.properties
-        volumes:
-        - name: connect-config
-          secret:
-            secretName: connect-distributed-config
-        - name: connect-log4j
-          configMap:
-            name: connect-log4j-config
+<div class="codehilite"><pre><span></span>  <span class="c1"># Deployment</span>
+  <span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
+  <span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Deployment</span>
+  <span class="nt">metadata</span><span class="p">:</span>
+    <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kafkaconnect-deploy</span>
+    <span class="nt">labels</span><span class="p">:</span>
+      <span class="nt">app</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kafkaconnect</span>
+  <span class="nt">spec</span><span class="p">:</span>
+    <span class="nt">replicas</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+    <span class="nt">selector</span><span class="p">:</span>
+      <span class="nt">matchLabels</span><span class="p">:</span>
+        <span class="nt">app</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kafkaconnect</span>
+    <span class="nt">template</span><span class="p">:</span>
+      <span class="nt">metadata</span><span class="p">:</span>
+        <span class="nt">labels</span><span class="p">:</span>
+          <span class="nt">app</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kafkaconnect</span>
+      <span class="nt">spec</span><span class="p">:</span>
+        <span class="nt">securityContext</span><span class="p">:</span>
+          <span class="nt">runAsNonRoot</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+          <span class="nt">runAsUser</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5000</span>
+        <span class="nt">containers</span><span class="p">:</span>
+          <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kafkaconnect-container</span>
+            <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">docker-registry.default.svc.cluster.local:5000/your-namespace-here/kafka-connect-debezium-postgres:0.0.1</span>
+            <span class="nt">readinessProbe</span><span class="p">:</span>
+              <span class="nt">httpGet</span><span class="p">:</span>
+                <span class="nt">path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/</span>
+                <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8083</span>
+            <span class="nt">livenessProbe</span><span class="p">:</span>
+              <span class="nt">httpGet</span><span class="p">:</span>
+                <span class="nt">path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/</span>
+                <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8083</span>
+            <span class="nt">ports</span><span class="p">:</span>
+            <span class="p p-Indicator">-</span> <span class="nt">containerPort</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8083</span>
+            <span class="nt">volumeMounts</span><span class="p">:</span>
+            <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">connect-config</span>
+              <span class="nt">mountPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/opt/kafka/config/connect-distributed.properties</span>
+              <span class="nt">subPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">connect-distributed.properties</span>
+            <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">connect-log4j</span>
+              <span class="nt">mountPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/opt/kafka/config/connect-log4j.properties</span>
+              <span class="nt">subPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">connect-log4j.properties</span>
+        <span class="nt">volumes</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">connect-config</span>
+          <span class="nt">secret</span><span class="p">:</span>
+            <span class="nt">secretName</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">connect-distributed-config</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">connect-log4j</span>
+          <span class="nt">configMap</span><span class="p">:</span>
+            <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">connect-log4j-config</span>
 
-  ---
-  # Service
-  apiVersion: v1
-  kind: Service
-  metadata:
-    name: kafkaconnect-service
-    labels:
-      app: kafkaconnect-service
-  spec:
-    type: NodePort
-    ports:
-      - name: kafkaconnect
-        protocol: TCP
-        port: 8083
-        nodePort: 30500
-    selector:
-        app: kafkaconnect
+  <span class="l l-Scalar l-Scalar-Plain">---</span>
+  <span class="c1"># Service</span>
+  <span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
+  <span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Service</span>
+  <span class="nt">metadata</span><span class="p">:</span>
+    <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kafkaconnect-service</span>
+    <span class="nt">labels</span><span class="p">:</span>
+      <span class="nt">app</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kafkaconnect-service</span>
+  <span class="nt">spec</span><span class="p">:</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">NodePort</span>
+    <span class="nt">ports</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kafkaconnect</span>
+        <span class="nt">protocol</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">TCP</span>
+        <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8083</span>
+        <span class="nt">nodePort</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">30500</span>
+    <span class="nt">selector</span><span class="p">:</span>
+        <span class="nt">app</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kafkaconnect</span>
 </pre></div></p>
 </li>
 <li>
@@ -795,45 +773,68 @@
 </li>
 <li>
 <p>Create a ConfigMap from the <code>extended.conf</code> file with the following command (replacing <code>your-namespace-here</code>)
-<div class="codehilite"><pre><span></span>  $ oc create configmap --namespace your-namepace-here --from-file=extended.conf postgresql-config
+<div class="codehilite"><pre><span></span>  $ oc create configmap --namespace your-namepace-here --from-file<span class="o">=</span>extended.conf postgresql-config
 </pre></div></p>
 </li>
 <li>
 <p>Install PostgreSQL using the Stable Helm Chart with the following command (replacing <code>your-namespace-here</code>). For more configuration options, refer to the <a href="https://github.com/helm/charts/blob/master/stable/postgresql/README.md">PostgreSQL Helm Chart</a>
-<div class="codehilite"><pre><span></span>  $ helm install --name postgres --namespace your-namespace-here --set extendedConfConfigMap=postgresql-config --set service.type=NodePort --set service.nodePort=30600 --set postgresqlPassword=passw0rd --set securityContext.runAsUser=5000 --set volumePermissions.securityContext.runAsUser=5000 stable/postgresql --tls
+<div class="codehilite"><pre><span></span>  $ helm install --name postgres --namespace your-namespace-here --set <span class="nv">extendedConfConfigMap</span><span class="o">=</span>postgresql-config --set service.type<span class="o">=</span>NodePort --set service.nodePort<span class="o">=</span><span class="m">30600</span> --set <span class="nv">postgresqlPassword</span><span class="o">=</span>passw0rd --set securityContext.runAsUser<span class="o">=</span><span class="m">5000</span> --set volumePermissions.securityContext.runAsUser<span class="o">=</span><span class="m">5000</span> stable/postgresql --tls
 </pre></div></p>
 </li>
 <li>
 <p>Finally, connect to your PostgreSQL instance with your favorite PostgreSQL client and create a table with data. Note that the <code>psql</code> client is installed on the postgres container. You may <code>exec</code> into the postgres container and use psql from there.
-<div class="codehilite"><pre><span></span>  $ oc exec --namespace your-namespace-here -it postgres-postgresql-0 -- /bin/sh
+<div class="codehilite"><pre><span></span>  $ oc <span class="nb">exec</span> --namespace your-namespace-here -it postgres-postgresql-0 -- /bin/sh
 </pre></div>
 <div class="codehilite"><pre><span></span>  $ psql login --user postgres
 </pre></div></p>
 </li>
 </ol>
+<h2 id="add-sample-data-to-postgresql">Add Sample Data to PostgreSQL</h2>
+<ol>
+<li>
+<p>Open a shell in the Postgres container.
+<div class="codehilite"><pre><span></span>  $ kubectl <span class="nb">exec</span> --namespace your-namespace-here -it postgres-postgresql-0  -- /bin/sh
+</pre></div></p>
+</li>
+<li>
+<p>Login to Postgres with the following command, entering the password <code>passw0rd</code> when prompted (this is the password set from the <code>helm install</code> command in the previous section).
+<div class="codehilite"><pre><span></span>  $ psql --user postgres
+</pre></div></p>
+</li>
+<li>
+<p>Create a table named <code>containers</code>.
+<div class="codehilite"><pre><span></span>  <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">containers</span><span class="p">(</span><span class="n">containerid</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span><span class="k">type</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="n">status</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="n">brand</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span><span class="n">capacity</span> <span class="nb">DECIMAL</span><span class="p">,</span><span class="n">CREATIONDATE</span> <span class="k">TIMESTAMP</span> <span class="k">DEFAULT</span> <span class="k">CURRENT_TIMESTAMP</span><span class="p">,</span><span class="n">UPDATEDATE</span> <span class="k">TIMESTAMP</span> <span class="k">DEFAULT</span> <span class="k">CURRENT_TIMESTAMP</span><span class="p">,</span><span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">containerid</span><span class="p">));</span>
+</pre></div></p>
+</li>
+<li>
+<p>Insert data into the table.
+<div class="codehilite"><pre><span></span>  <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">containers</span> <span class="p">(</span><span class="n">containerid</span><span class="p">,</span> <span class="k">type</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">brand</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;C01&#39;</span><span class="p">,</span><span class="s1">&#39;Reefer&#39;</span><span class="p">,</span><span class="s1">&#39;Operational&#39;</span><span class="p">,</span><span class="s1">&#39;containerbrand&#39;</span><span class="p">,</span><span class="mi">20</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;C02&#39;</span><span class="p">,</span><span class="s1">&#39;Dry&#39;</span><span class="p">,</span><span class="s1">&#39;Operational&#39;</span><span class="p">,</span><span class="s1">&#39;containerbrand&#39;</span><span class="p">,</span><span class="mi">20</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;C03&#39;</span><span class="p">,</span><span class="s1">&#39;Dry&#39;</span><span class="p">,</span><span class="s1">&#39;Operational&#39;</span><span class="p">,</span><span class="s1">&#39;containerbrand&#39;</span><span class="p">,</span><span class="mi">40</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;C04&#39;</span><span class="p">,</span><span class="s1">&#39;FlatRack&#39;</span><span class="p">,</span><span class="s1">&#39;Operational&#39;</span><span class="p">,</span><span class="s1">&#39;containerbrand&#39;</span><span class="p">,</span><span class="mi">40</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;C05&#39;</span><span class="p">,</span><span class="s1">&#39;OpenTop&#39;</span><span class="p">,</span><span class="s1">&#39;Operational&#39;</span><span class="p">,</span><span class="s1">&#39;containerbrand&#39;</span><span class="p">,</span><span class="mi">40</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;C06&#39;</span><span class="p">,</span><span class="s1">&#39;OpenSide&#39;</span><span class="p">,</span><span class="s1">&#39;Operational&#39;</span><span class="p">,</span><span class="s1">&#39;containerbrand&#39;</span><span class="p">,</span><span class="mi">40</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;C07&#39;</span><span class="p">,</span><span class="s1">&#39;Tunnel&#39;</span><span class="p">,</span><span class="s1">&#39;Operational&#39;</span><span class="p">,</span><span class="s1">&#39;containerbrand&#39;</span><span class="p">,</span><span class="mi">40</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;C08&#39;</span><span class="p">,</span><span class="s1">&#39;Tank&#39;</span><span class="p">,</span><span class="s1">&#39;Operational&#39;</span><span class="p">,</span><span class="s1">&#39;containerbrand&#39;</span><span class="p">,</span><span class="mi">40</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;C09&#39;</span><span class="p">,</span><span class="s1">&#39;Thermal&#39;</span><span class="p">,</span><span class="s1">&#39;Operational&#39;</span><span class="p">,</span><span class="s1">&#39;containerbrand&#39;</span><span class="p">,</span><span class="mi">20</span><span class="p">);</span>
+</pre></div></p>
+</li>
+</ol>
 <h2 id="configure-a-debezium-kafka-connect-connector">Configure a Debezium Kafka Connect Connector</h2>
 <p>After you have a configured PostgreSQL instance, you may then configure a new Debezium Kafka Connect connector for PostgreSQL. Kafka Connect connectors are configured by making a request to the Kafka Connect API endpoint.</p>
-<p>The following shows a configuration of a PostgreSQL instance at <code>postgres-postgresql.your-namespace-here.svc.cluster.local</code> on port <code>5432</code> with username <code>postgres</code> and password <code>passw0rd</code>. The database is <code>postgres</code> with table <code>public.people</code>. In this example, we are using the <code>pgoutput</code> logical decoding output plugin. Also, we are using the <code>cURL</code> HTTP client to make a call to the Kafka Connect API at <code>http://192.168.10.2:30500</code> since <code>192.168.10.2</code> is one our cluster nodes and the Kafka Connect API is exposed as a <code>NodePort</code> on port <code>30500</code>.</p>
-<div class="codehilite"><pre><span></span>curl -X POST \
-  http://192.168.10.2:30500/connectors \
-  -H &#39;Content-Type: application/json&#39; \
-  -d &#39;{
-    &quot;name&quot;: &quot;people-connector&quot;,
-    &quot;config&quot;: {
-            &quot;connector.class&quot;: &quot;io.debezium.connector.postgresql.PostgresConnector&quot;,
-            &quot;plugin.name&quot;: &quot;pgoutput&quot;,
-            &quot;database.hostname&quot;: &quot;postgres-postgresql.your-namespace-here.svc.cluster.local&quot;,
-            &quot;database.port&quot;: &quot;5432&quot;,
-            &quot;database.user&quot;: &quot;postgres&quot;,
-            &quot;database.password&quot;: &quot;passw0rd&quot;,
-            &quot;database.dbname&quot;: &quot;postgres&quot;,
-            &quot;database.server.name&quot;: &quot;postgres&quot;,
-            &quot;table.whitelist&quot;: &quot;public.people&quot;
-      }
-}&#39;
+<p>The following shows a configuration of a PostgreSQL instance at <code>postgres-postgresql.your-namespace-here.svc.cluster.local</code> on port <code>5432</code> with username <code>postgres</code> and password <code>passw0rd</code>. The database is <code>postgres</code> with table <code>public.containers</code>. In this example, we are using the <code>pgoutput</code> logical decoding output plugin. Also, we are using the <code>cURL</code> HTTP client to make a call to the Kafka Connect API at <code>http://192.168.10.2:30500</code> since <code>192.168.10.2</code> is one our cluster nodes and the Kafka Connect API is exposed as a <code>NodePort</code> on port <code>30500</code>.</p>
+<div class="codehilite"><pre><span></span>curl -X POST <span class="se">\</span>
+  http://192.168.10.2:30500/connectors <span class="se">\</span>
+  -H <span class="s1">&#39;Content-Type: application/json&#39;</span> <span class="se">\</span>
+  -d <span class="s1">&#39;{</span>
+<span class="s1">    &quot;name&quot;: &quot;containers-connector&quot;,</span>
+<span class="s1">    &quot;config&quot;: {</span>
+<span class="s1">            &quot;connector.class&quot;: &quot;io.debezium.connector.postgresql.PostgresConnector&quot;,</span>
+<span class="s1">            &quot;plugin.name&quot;: &quot;pgoutput&quot;,</span>
+<span class="s1">            &quot;database.hostname&quot;: &quot;postgres-postgresql.your-namespace-here.svc.cluster.local&quot;,</span>
+<span class="s1">            &quot;database.port&quot;: &quot;5432&quot;,</span>
+<span class="s1">            &quot;database.user&quot;: &quot;postgres&quot;,</span>
+<span class="s1">            &quot;database.password&quot;: &quot;passw0rd&quot;,</span>
+<span class="s1">            &quot;database.dbname&quot;: &quot;postgres&quot;,</span>
+<span class="s1">            &quot;database.server.name&quot;: &quot;postgres&quot;,</span>
+<span class="s1">            &quot;table.whitelist&quot;: &quot;public.containers&quot;</span>
+<span class="s1">      }</span>
+<span class="s1">}&#39;</span>
 </pre></div>
 
-<p>You should then be able to return to the Event Streams UI, navigating to the "Topics" section. You can then click on "postgres.public.people" (or whatever your table name is) to see your newly created topic. Then, click on "Messages" to view the messages that Debezium has written to the topic.</p>
+<p>You should then be able to return to the Event Streams UI, navigating to the "Topics" section. You can then click on "postgres.public.containers" (or whatever your table name is) to see your newly created topic. Then, click on "Messages" to view the messages that Debezium has written to the topic.</p>
                 
                   
                 

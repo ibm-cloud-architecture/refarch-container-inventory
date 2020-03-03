@@ -247,46 +247,10 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
     
     <label class="md-nav__link" for="nav-2">
-      Development approach
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
-        Development approach
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../creatingApp/" title="Create foundations" class="md-nav__link">
-      Create foundations
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
-    
-    <label class="md-nav__link" for="nav-3">
       Integrations
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
+      <label class="md-nav__title" for="nav-2">
         Integrations
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -300,6 +264,18 @@
   <li class="md-nav__item">
     <a href="../mq-kafka/" title="MQ - Kafka" class="md-nav__link">
       MQ - Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../cdc/" title="CDC - Kafka" class="md-nav__link">
+      CDC - Kafka
     </a>
   </li>
 
@@ -342,13 +318,13 @@
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
     
-    <label class="md-nav__link" for="nav-4">
+    <label class="md-nav__link" for="nav-3">
       Solution Deployments
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-4">
+      <label class="md-nav__title" for="nav-3">
         Solution Deployments
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -370,18 +346,6 @@
           
           
 
-
-  <li class="md-nav__item">
-    <a href="../mq-cloud/" title="Running MQ on IBM Cloud" class="md-nav__link">
-      Running MQ on IBM Cloud
-    </a>
-  </li>
-
-        
-          
-          
-          
-
   
 
 
@@ -392,9 +356,45 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Deploy and run on Openshift
+      </label>
+    
     <a href="./" title="Deploy and run on Openshift" class="md-nav__link md-nav__link--active">
       Deploy and run on Openshift
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pre-requisite" title="Pre-requisite" class="md-nav__link">
+    Pre-requisite
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-tables-and-load-data" title="Create tables and load data" class="md-nav__link">
+    Create tables and load data
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -421,6 +421,29 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pre-requisite" title="Pre-requisite" class="md-nav__link">
+    Pre-requisite
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-tables-and-load-data" title="Create tables and load data" class="md-nav__link">
+    Create tables and load data
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -435,6 +458,19 @@
                 
                 
                 <h1 id="deploy-and-run-on-openshift">Deploy and run on Openshift</h1>
+<p>We address here how to deploy the liberty app to Openshift connected to Db2 on IBM Cloud and MQ on IBM Cloud.</p>
+<h2 id="pre-requisite">Pre-requisite</h2>
+<ul>
+<li>
+<p>You should have already provisionned Db2 as service on Cloud, if not see <a href="../run-local/#pre-requisites">this section</a>.</p>
+</li>
+<li>
+<p>Get a DB2 server or service up and running. You can create a DB2 service on IBM Cloud using the <a href="https://cloud.ibm.com/docs/services/Db2onCloud?topic=Db2onCloud-getting-started#getting-started">product documentation instructions</a>. Get the service credentials. </p>
+</li>
+<li>Install DB driver on your local environment by following one of <a href="https://cloud.ibm.com/docs/Db2onCloud/connecting?topic=Db2onCloud-dr_pkg#instlng">those instructions</a>. Basically, open the DB2 console, under the <code>burger icon</code> go to Connection Information and select the operating system needed. Set up the environment with the db2profile: <code>source /Applications/dsdriver/db2profile</code>. </li>
+</ul>
+<h2 id="create-tables-and-load-data">Create tables and load data</h2>
+<p>Using the DB2 console, use <code>Run SQL</code> feature, to create the <code>containers</code> table (create statement in the file <code>db2/sql/inventory/create-tables.db2</code>) and load the data using the SQL file (db2/sql/inventory/loaddata.db2)</p>
                 
                   
                 
@@ -455,7 +491,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../mq-cloud/" title="Running MQ on IBM Cloud" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../run-local/" title="Deploy and run locally" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -464,7 +500,7 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Running MQ on IBM Cloud
+                Deploy and run locally
               </span>
             </div>
           </a>
