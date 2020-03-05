@@ -1,0 +1,2 @@
+project-name: jee-inventory
+stack: docker.io/appsody/java-openliberty:0.2
