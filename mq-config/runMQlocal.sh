@@ -6,7 +6,7 @@ docker run \
   --volume qm1data:/mnt/mqm \
   --publish 1414:1414 \
   --publish 9443:9443 \
-  --network mq-network --network-alias qmgr \
+  --hostname qmgr \
   --env MQ_APP_PASSWORD=admin01 \
   -d \
   ibmcase/mq

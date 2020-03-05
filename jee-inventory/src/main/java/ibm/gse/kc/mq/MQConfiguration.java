@@ -14,7 +14,7 @@ import com.ibm.mq.constants.MQConstants;
 
 /**
  * Define properties loaded from config files.
- * 
+ *
  * Define factory method to create Queue manager
  * @author jerome boyer
  *
@@ -29,9 +29,9 @@ public class MQConfiguration {
 	public static final String MQ_CHANNEL = "mq.applicationChannelName";
 	public static final String MQ_USERID = "mq.userid";
 	public static final String MQ_PASSWORD = "mq.password";
-	
+
 	public static MQConfiguration instance;
-	
+
 	public static synchronized MQConfiguration instance() {
 		if (instance == null) {
 			instance = new MQConfiguration();
@@ -40,11 +40,11 @@ public class MQConfiguration {
 		return instance;
 	}
 	public Properties properties = new Properties();
-	
+
 	public void loadProperties() {
 		loadPropertiesFromStream(getClass().getClassLoader().getResourceAsStream("config.properties"));
 	}
-	
+
 	private void loadPropertiesFromStream(InputStream input){
 		try {
 			properties.load(input);
@@ -76,30 +76,30 @@ public class MQConfiguration {
 			setDefaults();
 		}
 	}
-	
+
 	private  void setDefaults() {
 		properties.setProperty(MQ_PLATFORM,"IBM MQ");
 		properties.setProperty(MQ_QUEUEMANAGER,"LQM1");
-		properties.setProperty(MQ_TO_QUEUENAME,"TO.CONTAINERS"); 
-		properties.setProperty(MQ_FROM_QUEUENAME,"FROM.CONTAINERS"); 
+		properties.setProperty(MQ_TO_QUEUENAME,"TO.CONTAINERS");
+		properties.setProperty(MQ_FROM_QUEUENAME,"FROM.CONTAINERS");
 		properties.setProperty(MQ_HOST,"localhost");
 		properties.setProperty(MQ_PORT,"1414");
-		properties.setProperty(MQ_CHANNEL, "CLOUD.APP.SVRCONN");		
-		properties.setProperty(MQ_USERID, "admin");
+		properties.setProperty(MQ_CHANNEL, "DEV.APP.SVRCONN");
+		properties.setProperty(MQ_USERID, "app");
 		properties.setProperty(MQ_PASSWORD, "admin01");
 	}
 
 	public Properties getProperties() {
 		return properties;
 	}
-	
+
 	public MQQueueManager createQueueManager() throws MQException {
 		Hashtable<String, Object> props = new Hashtable<String, Object>();
         props.put(MQConstants.CHANNEL_PROPERTY, getProperties().getProperty(MQConfiguration.MQ_CHANNEL));
-      	int integerPortNumber = Integer.parseInt(getProperties().getProperty(MQConfiguration.MQ_PORT));	
+      	int integerPortNumber = Integer.parseInt(getProperties().getProperty(MQConfiguration.MQ_PORT));
         props.put(MQConstants.PORT_PROPERTY, integerPortNumber);
       	props.put(MQConstants.HOST_NAME_PROPERTY, getProperties().getProperty(MQConfiguration.MQ_HOST));
-        
+
         props.put(MQConstants.USER_ID_PROPERTY, getProperties().getProperty(MQConfiguration.MQ_USERID));
         props.put(MQConstants.PASSWORD_PROPERTY, getProperties().getProperty(MQConfiguration.MQ_PASSWORD));
         props.put(MQConstants.USE_MQCSP_AUTHENTICATION_PROPERTY, true);
