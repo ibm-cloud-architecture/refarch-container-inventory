@@ -14,5 +14,7 @@
 * limitations under the License.
 
 * Define queues
-define ql('TO.CONTAINERS') 
-define ql('FROM.CONTAINERS') 
+define ql('TO.CONTAINERS')
+define ql('FROM.CONTAINERS')
+
+SET AUTHREC PROFILE('**.CONTAINERS') GROUP('mqclient') OBJTYPE(QUEUE) AUTHADD(BROWSE,GET,INQ,PUT,SET)
